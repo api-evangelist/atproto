@@ -1,0 +1,68 @@
+---
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: AT Protocol
+providerId: atproto
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Social Networking
+  - Decentralized
+  - Open Source
+description: >-
+  FOCUS-aligned FinOps profile for AT Protocol. The protocol itself is free
+  and open-source; costs arise from hosting infrastructure (PDS, Relay, AppView,
+  feed generators) on cloud providers. Operators should track compute, storage,
+  and bandwidth consumption for each AT Protocol service component they run.
+sources:
+  - https://atproto.com/
+  - https://bsky.social/about/faq
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: AT Protocol / Bluesky Social PBC
+serviceCategory: Social Networking
+billingModel:
+  pricingCategory: Free Open Protocol
+  billingFrequency: Monthly
+  billingCurrency: USD
+focusColumns:
+  ServiceName: AT Protocol
+  ServiceCategory: Social Networking
+  ProviderName: AT Protocol / Bluesky Social PBC
+  PublisherName: AT Protocol
+  BillingCurrency: USD
+meters:
+  - name: PDS Compute Hours
+    unit: vCPU-Hour
+    aggregation: sum
+  - name: Repository Storage
+    unit: GB-Month
+    aggregation: sum
+  - name: Firehose Bandwidth
+    unit: GB
+    aggregation: sum
+  - name: API Requests Served
+    unit: Request
+    aggregation: sum
+principles:
+  - name: Visibility
+    description: >-
+      Track AT Protocol infrastructure consumption (PDS, Relay, AppView, feed
+      generators) monthly across all cloud resources to identify cost drivers.
+  - name: Optimization
+    description: >-
+      Right-size PDS and Relay instances based on account count and firehose
+      throughput; leverage caching on AppView read paths to reduce compute costs.
+  - name: Accountability
+    description: >-
+      Tag cloud resources by AT Protocol service component (PDS, Relay,
+      AppView, Labeler, Feed Generator) to attribute costs to logical units
+      and enable chargeback for multi-tenant deployments.

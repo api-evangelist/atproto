@@ -1,0 +1,113 @@
+---
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: AT Protocol
+providerId: atproto
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Social Networking
+  - Decentralized
+  - Federated
+  - Open Source
+  - Bluesky
+description: >-
+  AT Protocol is a free, open protocol with no tiered pricing for API access.
+  The public read API (AppView) is available without authentication. Write
+  operations require an account on a Personal Data Server (PDS), which can be
+  self-hosted for free or hosted by Bluesky (bsky.social) at no charge.
+  Third-party PDS hosting costs vary by provider. There is no paid commercial
+  API tier; the protocol is governed as open infrastructure.
+sources:
+  - https://atproto.com/
+  - https://bsky.social/about/faq
+plans:
+  - id: atproto-free
+    name: Free (Open Protocol)
+    type: free
+    description: >-
+      Full read access to the Bluesky AppView (public.api.bsky.app) without
+      authentication. Read-only operations like fetching feeds, profiles, posts,
+      and threads are unrestricted. Firehose event stream accessible without
+      credentials.
+    entries:
+      - label: Public Read API Access
+        name: public_read_api
+        type: boolean
+        metric: access
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Firehose WebSocket Access
+        name: firehose_access
+        type: boolean
+        metric: access
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+  - id: atproto-account
+    name: Registered Account (bsky.social PDS)
+    type: freemium
+    description: >-
+      Free Bluesky account on the bsky.social PDS enabling authenticated write
+      operations including posts, likes, follows, and profile management.
+      Subject to content write rate limits (5,000 points/hour, 35,000
+      points/day) and API request limits (3,000 requests per 5 minutes per IP).
+    entries:
+      - label: Content Write Points
+        name: write_points_hourly
+        type: quota
+        metric: write_points
+        limit: 5000
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Content Write Points Daily
+        name: write_points_daily
+        type: quota
+        metric: write_points
+        limit: 35000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: API Requests (per IP)
+        name: api_requests_per_ip
+        type: quota
+        metric: requests
+        limit: 3000
+        timeFrame: hour
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+  - id: atproto-self-hosted
+    name: Self-Hosted PDS
+    type: free
+    description: >-
+      Operators can run their own Personal Data Server (PDS) using the open
+      source atproto reference implementation at no licensing cost. Infra
+      costs depend on chosen cloud provider. The protocol supports full
+      federation with Bluesky relay and AppView services.
+    entries:
+      - label: PDS Software License
+        name: pds_license
+        type: boolean
+        metric: access
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false

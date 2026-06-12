@@ -1,0 +1,114 @@
+---
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: AT Protocol
+providerId: atproto
+created: '2026-06-12'
+modified: '2026-06-12'
+reconciled: true
+tags:
+  - Rate Limiting
+  - XRPC
+  - Bluesky
+  - AT Protocol
+description: >-
+  AT Protocol enforces rate limits at multiple layers: content write operations
+  use a points-based system per account, general API requests are throttled per
+  IP, and specific sensitive operations (account creation, session creation,
+  handle updates) have their own tighter limits. The Bluesky AppView offers
+  generous limits for read-only access. The Relay (firehose relay) imposes
+  per-second and daily throughput caps on repository stream consumers.
+sources:
+  - https://docs.bsky.app/docs/advanced-guides/rate-limits
+  - https://atproto.com/specs/xrpc
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: General API Requests (per IP)
+    scope: ip
+    metric: requests_per_5_minutes
+    limit: 3000
+    timeFrame: minute
+  - name: Content Write Points (per account, hourly)
+    scope: user
+    metric: write_points_per_hour
+    limit: 5000
+    timeFrame: hour
+  - name: Content Write Points (per account, daily)
+    scope: user
+    metric: write_points_per_day
+    limit: 35000
+    timeFrame: day
+  - name: Handle Updates (per account)
+    scope: user
+    metric: requests_per_5_minutes
+    limit: 10
+    timeFrame: minute
+  - name: Handle Updates Daily (per account)
+    scope: user
+    metric: requests_per_day
+    limit: 50
+    timeFrame: day
+  - name: Account Creation (per IP)
+    scope: ip
+    metric: requests_per_5_minutes
+    limit: 100
+    timeFrame: minute
+  - name: Session Creation (per account)
+    scope: user
+    metric: requests_per_5_minutes
+    limit: 30
+    timeFrame: minute
+  - name: Session Creation Daily (per account)
+    scope: user
+    metric: requests_per_day
+    limit: 300
+    timeFrame: day
+  - name: Account Deletion (per IP)
+    scope: ip
+    metric: requests_per_5_minutes
+    limit: 50
+    timeFrame: minute
+  - name: Password Reset (per IP)
+    scope: ip
+    metric: requests_per_5_minutes
+    limit: 50
+    timeFrame: minute
+  - name: Blob Upload Max Size
+    scope: user
+    metric: bytes_per_upload
+    limit: 52428800
+    timeFrame: usage
+  - name: Relay Repository Stream Events (per second)
+    scope: org
+    metric: events_per_second
+    limit: 50
+    timeFrame: minute
+  - name: Relay Repository Stream Events (hourly)
+    scope: org
+    metric: events_per_hour
+    limit: 2600
+    timeFrame: hour
+  - name: Relay Repository Stream Events (daily)
+    scope: org
+    metric: events_per_day
+    limit: 21000
+    timeFrame: day
+  - name: Labeler Labels (per second)
+    scope: user
+    metric: labels_per_second
+    limit: 5
+    timeFrame: minute
+  - name: Labeler Labels (hourly)
+    scope: user
+    metric: labels_per_hour
+    limit: 10000
+    timeFrame: hour
+  - name: Labeler Labels (daily)
+    scope: user
+    metric: labels_per_day
+    limit: 100000
+    timeFrame: day
