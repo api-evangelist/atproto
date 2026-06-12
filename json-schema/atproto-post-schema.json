@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/atproto/main/json-schema/atproto-post-schema.json",
+  "title": "Bluesky Post (app.bsky.feed.post)",
+  "description": "A post record in the Bluesky microblogging application, stored in the user's AT Protocol repository under the app.bsky.feed.post collection. Supports rich text, embeds, replies, and language tagging.",
+  "type": "object",
+  "required": ["$type", "text", "createdAt"],
+  "properties": {
+    "$type": {
+      "type": "string",
+      "const": "app.bsky.feed.post",
+      "description": "Lexicon type identifier"
+    },
+    "text": {
+      "type": "string",
+      "description": "The primary post content. May be an empty string, if there are embeds.",
+      "maxLength": 3000
+    },
+    "facets": {
+      "type": "array",
+      "description": "Annotations of text (mentions, URLs, hashtags, etc.)",
+      "items": {
+        "type": "object",
+        "required": ["index", "features"],
+        "properties": {
+          "index": {
+            "type": "object",
+            "required": ["byteStart", "byteEnd"],
+            "properties": {
+              "byteStart": { "type": "integer", "minimum": 0 },
+              "byteEnd": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["$type"],
+              "properties": {
+                "$type": {
+                  "type": "string",
+                  "enum": [
+                    "app.bsky.richtext.facet#mention",
+                    "app.bsky.richtext.facet#link",
+                    "app.bsky.richtext.facet#tag"
+                  ]
+                },
+                "did": {
+                  "type": "string",
+                  "description": "DID of the mentioned user (for mention facets)"
+                },
+                "uri": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "URL for link facets"
+                },
+                "tag": {
+                  "type": "string",
+                  "description": "Hashtag text without # prefix"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "reply": {
+      "type": "object",
+      "description": "Reply reference, linking this post to the parent and root of a thread",
+      "required": ["root", "parent"],
+      "properties": {
+        "root": {
+          "type": "object",
+          "required": ["uri", "cid"],
+          "properties": {
+            "uri": { "type": "string", "description": "AT-URI of the root post" },
+            "cid": { "type": "string", "description": "CID of the root post" }
+          }
+        },
+        "parent": {
+          "type": "object",
+          "required": ["uri", "cid"],
+          "properties": {
+            "uri": { "type": "string", "description": "AT-URI of the parent post" },
+            "cid": { "type": "string", "description": "CID of the parent post" }
+          }
+        }
+      }
+    },
+    "embed": {
+      "type": "object",
+      "description": "Embedded content. One of: images, external link, record, or record with media.",
+      "required": ["$type"],
+      "properties": {
+        "$type": {
+          "type": "string",
+          "enum": [
+            "app.bsky.embed.images",
+            "app.bsky.embed.external",
+            "app.bsky.embed.record",
+            "app.bsky.embed.recordWithMedia",
+            "app.bsky.embed.video"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "langs": {
+      "type": "array",
+      "description": "Indicates human language of post content. BCP-47 language tags.",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3
+    },
+    "labels": {
+      "type": "object",
+      "description": "Self-label values for this post. Effectively content warnings.",
+      "required": ["$type", "values"],
+      "properties": {
+        "$type": {
+          "type": "string",
+          "const": "com.atproto.label.defs#selfLabels"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["val"],
+            "properties": {
+              "val": { "type": "string", "maxLength": 128 }
+            }
+          },
+          "maxItems": 10
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Additional hashtags, beyond those in the 'text', up to 8 tags. Does not include the '#' prefix.",
+      "items": {
+        "type": "string",
+        "maxLength": 640
+      },
+      "maxItems": 8
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Client-declared timestamp when this post was originally created."
+    }
+  },
+  "examples": [
+    {
+      "$type": "app.bsky.feed.post",
+      "text": "Hello from the AT Protocol! #atproto",
+      "createdAt": "2026-06-12T00:00:00.000Z",
+      "langs": ["en"],
+      "facets": [
+        {
+          "index": { "byteStart": 28, "byteEnd": 36 },
+          "features": [
+            {
+              "$type": "app.bsky.richtext.facet#tag",
+              "tag": "atproto"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

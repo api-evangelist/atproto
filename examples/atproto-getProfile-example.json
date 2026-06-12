@@ -1,0 +1,39 @@
+{
+  "description": "Example request and response for app.bsky.actor.getProfile (public profile lookup)",
+  "endpoint": "GET https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile",
+  "request": {
+    "method": "GET",
+    "queryParameters": {
+      "actor": "bsky.app"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "did": "did:plc:z72i7hdynmk6r22z27h6tvur",
+      "handle": "bsky.app",
+      "displayName": "Bluesky",
+      "description": "The official Bluesky account.",
+      "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:z72i7hdynmk6r22z27h6tvur/bafkreidzk7hzovztwwnsgxvdpbdirn24cvkgbzmchvuiqqhivhzr5m5fxy@jpeg",
+      "banner": "https://cdn.bsky.app/img/banner/plain/did:plc:z72i7hdynmk6r22z27h6tvur/bafkreibqfwk2vy3bnjknxuetczjbsq7b2qhbmixiocwnwmfr6zx3qc5r4@jpeg",
+      "followersCount": 847023,
+      "followsCount": 412,
+      "postsCount": 3819,
+      "associated": {
+        "lists": 0,
+        "feedgens": 2,
+        "starterPacks": 1,
+        "labeler": false,
+        "chat": {
+          "allowIncoming": "following"
+        }
+      },
+      "indexedAt": "2023-04-24T18:00:00.000Z",
+      "createdAt": "2023-04-24T18:00:00.000Z",
+      "labels": []
+    }
+  }
+}

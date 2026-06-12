@@ -1,0 +1,72 @@
+{
+  "description": "Example request and response for app.bsky.feed.getTimeline (home timeline)",
+  "endpoint": "GET https://api.bsky.app/xrpc/app.bsky.feed.getTimeline",
+  "request": {
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ..."
+    },
+    "queryParameters": {
+      "limit": 2
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "cursor": "2026-06-12T00:00:00.000Z::3jwvwv4f7jo2t",
+      "feed": [
+        {
+          "post": {
+            "uri": "at://did:plc:abc123/app.bsky.feed.post/3jwv1",
+            "cid": "bafyreiabcdef1234",
+            "author": {
+              "did": "did:plc:abc123",
+              "handle": "bob.bsky.social",
+              "displayName": "Bob",
+              "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:abc123/bafkreiabc@jpeg"
+            },
+            "record": {
+              "$type": "app.bsky.feed.post",
+              "text": "Just shipped a new feature! Check it out.",
+              "createdAt": "2026-06-12T12:00:00.000Z",
+              "langs": ["en"]
+            },
+            "replyCount": 3,
+            "repostCount": 12,
+            "likeCount": 47,
+            "quoteCount": 2,
+            "indexedAt": "2026-06-12T12:00:05.000Z",
+            "labels": []
+          }
+        },
+        {
+          "post": {
+            "uri": "at://did:plc:xyz789/app.bsky.feed.post/3jwv2",
+            "cid": "bafyreixy789",
+            "author": {
+              "did": "did:plc:xyz789",
+              "handle": "carol.bsky.social",
+              "displayName": "Carol"
+            },
+            "record": {
+              "$type": "app.bsky.feed.post",
+              "text": "The AT Protocol firehose is incredible for building real-time apps. #atproto",
+              "createdAt": "2026-06-12T11:45:00.000Z",
+              "langs": ["en"]
+            },
+            "replyCount": 1,
+            "repostCount": 5,
+            "likeCount": 23,
+            "quoteCount": 0,
+            "indexedAt": "2026-06-12T11:45:03.000Z",
+            "labels": []
+          },
+          "reason": null
+        }
+      ]
+    }
+  }
+}

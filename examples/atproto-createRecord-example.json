@@ -1,0 +1,56 @@
+{
+  "description": "Example request and response for com.atproto.repo.createRecord (create a Bluesky post)",
+  "endpoint": "POST https://bsky.social/xrpc/com.atproto.repo.createRecord",
+  "request": {
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ..."
+    },
+    "body": {
+      "repo": "alice.bsky.social",
+      "collection": "app.bsky.feed.post",
+      "record": {
+        "$type": "app.bsky.feed.post",
+        "text": "Hello, AT Protocol! #atproto #bluesky",
+        "createdAt": "2026-06-12T00:00:00.000Z",
+        "langs": ["en"],
+        "facets": [
+          {
+            "index": { "byteStart": 21, "byteEnd": 29 },
+            "features": [
+              {
+                "$type": "app.bsky.richtext.facet#tag",
+                "tag": "atproto"
+              }
+            ]
+          },
+          {
+            "index": { "byteStart": 30, "byteEnd": 38 },
+            "features": [
+              {
+                "$type": "app.bsky.richtext.facet#tag",
+                "tag": "bluesky"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "uri": "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.post/3jwvwv4f7jo2t",
+      "cid": "bafyreib2rxk3rybk3aobmv3bxyifqpv7rcjdo4pehcgr7ym6bkuajkxb7a",
+      "commit": {
+        "cid": "bafyreig2mjzpgmcfm4btaog4yxfqrmqnf5rphfwqthwnkjpyc7f7bqzrki",
+        "rev": "3jwvwv4f7jo2t"
+      },
+      "validationStatus": "valid"
+    }
+  }
+}

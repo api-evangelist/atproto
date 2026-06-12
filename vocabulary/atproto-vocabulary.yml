@@ -1,0 +1,182 @@
+---
+title: AT Protocol Vocabulary
+description: >-
+  Core terminology and concepts for the AT Protocol (Authenticated Transfer
+  Protocol) and the Bluesky social application built on it. The protocol
+  uses Lexicon schemas for type definitions and XRPC for HTTP transport.
+source: https://atproto.com/
+version: '1.0.0'
+terms:
+  - term: AT Protocol
+    abbreviation: ATProto
+    definition: >-
+      Authenticated Transfer Protocol — an open, federated social networking
+      protocol developed by Bluesky Social PBC. Defines standards for identity,
+      data storage, and communication across a decentralized social network.
+    url: https://atproto.com/
+
+  - term: XRPC
+    fullName: Cross-Resolver Protocol Calls
+    definition: >-
+      The HTTP API transport layer used by AT Protocol. Queries use HTTP GET
+      and procedures use HTTP POST. Each endpoint path is an NSID identifying
+      the Lexicon schema for the request and response.
+    url: https://atproto.com/specs/xrpc
+
+  - term: Lexicon
+    definition: >-
+      AT Protocol's schema definition language used to define record types,
+      XRPC method signatures, and data validation rules. Lexicon schemas are
+      identified by NSID and published as JSON files in the atproto repository.
+    url: https://atproto.com/specs/lexicon
+
+  - term: NSID
+    fullName: Namespaced Identifier
+    definition: >-
+      Reverse-DNS style identifier used to name Lexicon schemas and XRPC
+      endpoints. Examples: com.atproto.server.createSession,
+      app.bsky.feed.post. The domain portion indicates ownership.
+    url: https://atproto.com/specs/nsid
+
+  - term: DID
+    fullName: Decentralized Identifier
+    definition: >-
+      A W3C standard globally unique persistent identifier that does not
+      require a centralized registration authority. AT Protocol supports
+      did:plc (PLC Directory) and did:web methods. DIDs are the canonical
+      account identifier in AT Protocol.
+    url: https://atproto.com/specs/did
+
+  - term: Handle
+    definition: >-
+      A human-friendly DNS-based username for an AT Protocol account, such as
+      alice.bsky.social. Handles resolve to DIDs via DNS TXT records or the
+      /.well-known/atproto-did endpoint. They can change; DIDs cannot.
+    url: https://atproto.com/specs/handle
+
+  - term: PDS
+    fullName: Personal Data Server
+    definition: >-
+      A server hosting one or more AT Protocol user repositories. The PDS is
+      responsible for storing user data, signing commits, and serving the
+      XRPC API for read/write operations. Users can migrate between PDS hosts.
+    url: https://atproto.com/guides/self-hosting
+
+  - term: Repository
+    definition: >-
+      A user's signed, versioned data store on their PDS. Organized as a
+      Merkle tree of records grouped by collection (NSID). Every commit is
+      signed with the user's atproto signing key.
+    url: https://atproto.com/specs/repository
+
+  - term: AT-URI
+    fullName: AT Protocol URI
+    definition: >-
+      A URI scheme for addressing records in AT Protocol repositories. Format:
+      at://{authority}/{collection}/{rkey}. Example:
+      at://alice.bsky.social/app.bsky.feed.post/3jwvwv4f7jo2t
+    url: https://atproto.com/specs/at-uri-scheme
+
+  - term: CID
+    fullName: Content Identifier
+    definition: >-
+      A self-describing content-addressed hash used to uniquely identify
+      specific versions of records and blobs. Based on the IPLD/multiformats
+      standard. Ensures data integrity across federation.
+    url: https://ipld.io/docs/content-addressing/
+
+  - term: Relay
+    definition: >-
+      Also called BGS (Big Graph Service). A server that subscribes to
+      firehose streams from multiple PDS hosts and re-broadcasts a combined
+      event stream. The Bluesky relay is at bsky.network.
+    url: https://atproto.com/guides/federation
+
+  - term: AppView
+    definition: >-
+      A service that indexes AT Protocol data and provides application-specific
+      API views (e.g., feeds, profiles with follower counts). The Bluesky
+      AppView is hosted at api.bsky.app and public.api.bsky.app.
+    url: https://atproto.com/guides/application
+
+  - term: Firehose
+    definition: >-
+      A WebSocket event stream that broadcasts all public repository events
+      (commits, identity changes, account status) in real time. No API key
+      required. Available at wss://bsky.network/xrpc/com.atproto.sync.subscribeRepos
+      and via the Jetstream service.
+    url: https://atproto.com/specs/event-stream
+
+  - term: Jetstream
+    definition: >-
+      A lightweight JSON-over-WebSocket alternative to the raw firehose,
+      operated by Bluesky. Converts CAR-format commits to plain JSON for
+      easier consumption. Available at jetstream1.us-east.bsky.network.
+    url: https://github.com/bluesky-social/jetstream
+
+  - term: Lexicon Record
+    definition: >-
+      A JSON object stored in a user's AT Protocol repository under a specific
+      collection. Every record has a $type field matching its Lexicon NSID.
+      Examples: app.bsky.feed.post (post), app.bsky.graph.follow (follow).
+
+  - term: Record Key
+    abbreviation: rkey
+    definition: >-
+      The unique key identifying a record within a collection in a repository.
+      Often a TID (timestamp-based ID) or a semantic key like 'self' for
+      profile records.
+    url: https://atproto.com/specs/record-key
+
+  - term: TID
+    fullName: Timestamp Identifier
+    definition: >-
+      A sortable base32-encoded timestamp identifier used as the default rkey
+      for new records. Encodes microsecond Unix timestamps with a random clock
+      ID component to ensure uniqueness across distributed creation.
+
+  - term: Blob
+    definition: >-
+      Binary data (images, video, audio) uploaded separately from records via
+      com.atproto.repo.uploadBlob. A blob reference (blob CID + mime type +
+      size) is embedded in records. Blobs are stored by the PDS.
+
+  - term: Labeler
+    definition: >-
+      An AT Protocol service that applies content labels to posts, profiles, or
+      other records. Labels can be used to implement content warnings, content
+      filtering, or moderation. Users subscribe to labelers they trust.
+    url: https://atproto.com/guides/moderation
+
+  - term: Feed Generator
+    definition: >-
+      A third-party service that generates custom Bluesky feeds. Implements the
+      app.bsky.feed.getFeedSkeleton XRPC endpoint, returning a list of post
+      AT-URIs. Registered as a record in the creator's repository.
+    url: https://atproto.com/guides/feed-generator
+
+  - term: OAuth 2.0
+    definition: >-
+      AT Protocol supports OAuth 2.0 for third-party app authorization, using
+      the DPoP (Demonstrating Proof of Possession) binding for token security.
+      The authorization server is hosted by the user's PDS.
+    url: https://atproto.com/specs/oauth
+
+  - term: DPoP
+    fullName: Demonstrating Proof of Possession
+    definition: >-
+      An OAuth 2.0 extension requiring clients to cryptographically bind tokens
+      to their signing key. Used in AT Protocol OAuth to prevent token theft.
+    url: https://datatracker.ietf.org/doc/html/rfc9449
+
+  - term: PLC Directory
+    definition: >-
+      The default DID method for AT Protocol accounts (did:plc). A centralized
+      but auditable append-only log that maps DIDs to DID documents. Operated
+      by Bluesky at plc.directory.
+    url: https://web.plc.directory/
+
+  - term: Starter Pack
+    definition: >-
+      A curated list of accounts and feeds that new Bluesky users can follow
+      in one click. Stored as an app.bsky.graph.starterpack record.

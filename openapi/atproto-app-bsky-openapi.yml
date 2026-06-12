@@ -1,0 +1,1147 @@
+openapi: 3.0.3
+info:
+  title: Bluesky Application API (app.bsky)
+  description: >-
+    The Bluesky application-layer Lexicon API providing feed, actor, graph,
+    notification, and video endpoints for the microblogging application built
+    on AT Protocol. The AppView is accessible unauthenticated at
+    public.api.bsky.app for read operations, and at api.bsky.app for
+    authenticated write operations. Schemas are defined using Lexicon,
+    AT Protocol's schema definition language.
+  version: '1.0.0'
+  contact:
+    name: Bluesky
+    url: https://docs.bsky.app/
+  license:
+    name: MIT / Apache-2.0
+    url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
+externalDocs:
+  description: Bluesky HTTP API Reference
+  url: https://docs.bsky.app/docs/advanced-guides/atproto
+servers:
+  - url: https://public.api.bsky.app/xrpc
+    description: Public AppView (unauthenticated read operations)
+  - url: https://api.bsky.app/xrpc
+    description: Authenticated AppView (write operations)
+security:
+  - bearerAuth: []
+  - {}
+tags:
+  - name: actor
+    description: Actor (user) profile, search, and preference operations
+  - name: feed
+    description: Feed, post, timeline, and content operations
+  - name: graph
+    description: Graph operations — follows, blocks, lists, and mutes
+  - name: notification
+    description: Notification management
+  - name: video
+    description: Video upload and processing
+  - name: labeler
+    description: Labeling service operations
+paths:
+  /app.bsky.actor.getProfile:
+    get:
+      operationId: app_bsky_actor_getProfile
+      summary: Get Profile
+      description: >-
+        Get detailed profile view of an actor. Does not require auth, but
+        contains relevant metadata with auth.
+      tags:
+        - actor
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: actor
+          in: query
+          required: true
+          description: Handle or DID of account to fetch profile of.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Profile view
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileViewDetailed'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.actor.getProfiles:
+    get:
+      operationId: app_bsky_actor_getProfiles
+      summary: Get Profiles
+      description: Get detailed profile views of multiple actors.
+      tags:
+        - actor
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: actors
+          in: query
+          required: true
+          description: List of handles or DIDs to fetch profiles of. Maximum 25.
+          schema:
+            type: array
+            items:
+              type: string
+            maxItems: 25
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Profile views
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - profiles
+                properties:
+                  profiles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileViewDetailed'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.actor.searchActors:
+    get:
+      operationId: app_bsky_actor_searchActors
+      summary: Search Actors
+      description: Find actors (profiles) matching search criteria. Does not require auth.
+      tags:
+        - actor
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: Search query string. Syntax, operators, and ranking of results subject to change.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching actors
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - actors
+                properties:
+                  cursor:
+                    type: string
+                  actors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.actor.getPreferences:
+    get:
+      operationId: app_bsky_actor_getPreferences
+      summary: Get Preferences
+      description: Get private preferences attached to the current account.
+      tags:
+        - actor
+      responses:
+        '200':
+          description: User preferences
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - preferences
+                properties:
+                  preferences:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /app.bsky.actor.putPreferences:
+    post:
+      operationId: app_bsky_actor_putPreferences
+      summary: Put Preferences
+      description: Set the private preferences attached to the account.
+      tags:
+        - actor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - preferences
+              properties:
+                preferences:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: true
+      responses:
+        '200':
+          description: Preferences updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /app.bsky.actor.getSuggestions:
+    get:
+      operationId: app_bsky_actor_getSuggestions
+      summary: Get Suggestions
+      description: Get a list of suggested actors (tending toward familiarity).
+      tags:
+        - actor
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Suggested actors
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - actors
+                properties:
+                  cursor:
+                    type: string
+                  actors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileView'
+
+  /app.bsky.feed.getTimeline:
+    get:
+      operationId: app_bsky_feed_getTimeline
+      summary: Get Timeline
+      description: >-
+        Get a view of the requesting account's home timeline. This is expected
+        to be some form of reverse-chronological feed.
+      tags:
+        - feed
+      parameters:
+        - name: algorithm
+          in: query
+          required: false
+          description: Variant algorithm for timeline. Implementation-specific.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Timeline feed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FeedViewPost'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /app.bsky.feed.getAuthorFeed:
+    get:
+      operationId: app_bsky_feed_getAuthorFeed
+      summary: Get Author Feed
+      description: Get a view of an actor's 'author feed' (a.k.a. profile feed). Does not require auth.
+      tags:
+        - feed
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: actor
+          in: query
+          required: true
+          description: Handle or DID of account to fetch feed of.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          required: false
+          description: Combinations of post/repost types to include in response.
+          schema:
+            type: string
+            enum:
+              - posts_with_replies
+              - posts_no_replies
+              - posts_with_media
+              - posts_and_author_threads
+            default: posts_with_replies
+        - name: includePins
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Author feed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - feed
+                properties:
+                  cursor:
+                    type: string
+                  feed:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FeedViewPost'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.feed.getPosts:
+    get:
+      operationId: app_bsky_feed_getPosts
+      summary: Get Posts
+      description: Gets post views for a specified list of posts (by AT-URI). Does not require auth.
+      tags:
+        - feed
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: uris
+          in: query
+          required: true
+          description: List of post AT-URIs to fetch. Maximum 25.
+          schema:
+            type: array
+            items:
+              type: string
+            maxItems: 25
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Post views
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - posts
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.feed.getPostThread:
+    get:
+      operationId: app_bsky_feed_getPostThread
+      summary: Get Post Thread
+      description: Get posts in a thread. Does not require auth, but additional metadata and filtering will be applied for authed requests.
+      tags:
+        - feed
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: uri
+          in: query
+          required: true
+          description: Reference (AT-URI) to post record.
+          schema:
+            type: string
+        - name: depth
+          in: query
+          required: false
+          description: How many levels of reply depth should be included in response.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 1000
+            default: 6
+        - name: parentHeight
+          in: query
+          required: false
+          description: How many levels of parent (and grandparent, etc) post to include.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 1000
+            default: 80
+      responses:
+        '200':
+          description: Thread view
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - thread
+                properties:
+                  thread:
+                    type: object
+                    description: ThreadViewPost or NotFoundPost or BlockedPost
+                    additionalProperties: true
+                  threadgate:
+                    type: object
+                    additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.feed.searchPosts:
+    get:
+      operationId: app_bsky_feed_searchPosts
+      summary: Search Posts
+      description: Find posts matching search criteria, returning views of those posts.
+      tags:
+        - feed
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query string; syntax, operators, and ranking of results subject to change.
+          schema:
+            type: string
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - top
+              - latest
+            default: latest
+        - name: since
+          in: query
+          required: false
+          description: Filter results for posts after the indicated datetime (inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'.
+          schema:
+            type: string
+            format: date-time
+        - name: until
+          in: query
+          required: false
+          description: Filter results for posts before the indicated datetime (not inclusive).
+          schema:
+            type: string
+            format: date-time
+        - name: mentions
+          in: query
+          required: false
+          description: Filter to posts which mention the given account. Handles are resolved to DID before query. Only matches rich-text facet mentions.
+          schema:
+            type: string
+        - name: author
+          in: query
+          required: false
+          description: Filter to posts by the given account.
+          schema:
+            type: string
+        - name: lang
+          in: query
+          required: false
+          description: Filter to posts in the given language.
+          schema:
+            type: string
+        - name: tag
+          in: query
+          required: false
+          description: Filter to posts with the given tag (hashtag), based on rich-text facet or tag field. Do not include the '#' prefix.
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching posts
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - posts
+                properties:
+                  cursor:
+                    type: string
+                  hitsTotal:
+                    type: integer
+                    description: Count of search hits. Optional, may be rounded/truncated, and may not be possible to paginate through all hits.
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.feed.getLikes:
+    get:
+      operationId: app_bsky_feed_getLikes
+      summary: Get Likes
+      description: Get like records which reference a subject (by AT-URI with optional CID).
+      tags:
+        - feed
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: uri
+          in: query
+          required: true
+          description: AT-URI of the subject (eg, a post record).
+          schema:
+            type: string
+        - name: cid
+          in: query
+          required: false
+          description: CID of the subject record (optional, to align with a specific version of the record).
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Like records
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - uri
+                  - likes
+                properties:
+                  uri:
+                    type: string
+                  cid:
+                    type: string
+                  cursor:
+                    type: string
+                  likes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Like'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.graph.getFollowers:
+    get:
+      operationId: app_bsky_graph_getFollowers
+      summary: Get Followers
+      description: Enumerates accounts which follow a specified account (actor).
+      tags:
+        - graph
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: actor
+          in: query
+          required: true
+          description: Handle or DID of account to fetch followers of.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Followers list
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - subject
+                  - followers
+                properties:
+                  cursor:
+                    type: string
+                  subject:
+                    $ref: '#/components/schemas/ProfileView'
+                  followers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.graph.getFollows:
+    get:
+      operationId: app_bsky_graph_getFollows
+      summary: Get Follows
+      description: Enumerates accounts which a specified account (actor) follows.
+      tags:
+        - graph
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - name: actor
+          in: query
+          required: true
+          description: Handle or DID of account to fetch follows of.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Follows list
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - subject
+                  - follows
+                properties:
+                  cursor:
+                    type: string
+                  subject:
+                    $ref: '#/components/schemas/ProfileView'
+                  follows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /app.bsky.notification.listNotifications:
+    get:
+      operationId: app_bsky_notification_listNotifications
+      summary: List Notifications
+      description: Enumerate notifications for the requesting account. Requires auth.
+      tags:
+        - notification
+      parameters:
+        - name: reasons
+          in: query
+          required: false
+          description: Notification reasons to include in response.
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: priority
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: seenAt
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - notifications
+                properties:
+                  cursor:
+                    type: string
+                  notifications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notification'
+                  priority:
+                    type: boolean
+                  seenAt:
+                    type: string
+                    format: date-time
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /app.bsky.notification.getUnreadCount:
+    get:
+      operationId: app_bsky_notification_getUnreadCount
+      summary: Get Unread Count
+      description: Count the number of unread notifications for the requesting account. Requires auth.
+      tags:
+        - notification
+      parameters:
+        - name: priority
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: seenAt
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Unread notification count
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - count
+                properties:
+                  count:
+                    type: integer
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access JWT obtained from com.atproto.server.createSession
+
+  responses:
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+
+    ProfileViewDetailed:
+      type: object
+      required:
+        - did
+        - handle
+      properties:
+        did:
+          type: string
+          description: Decentralized Identifier
+        handle:
+          type: string
+          description: User handle (e.g., user.bsky.social)
+        displayName:
+          type: string
+          maxLength: 640
+        description:
+          type: string
+          maxLength: 2560
+        avatar:
+          type: string
+          format: uri
+        banner:
+          type: string
+          format: uri
+        followersCount:
+          type: integer
+        followsCount:
+          type: integer
+        postsCount:
+          type: integer
+        associated:
+          type: object
+          description: Associated account data (lists, feeds, labeler, etc.)
+          additionalProperties: true
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+
+    ProfileView:
+      type: object
+      required:
+        - did
+        - handle
+      properties:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
+          type: object
+          additionalProperties: true
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+
+    ViewerState:
+      type: object
+      description: Metadata about the relationship between the requesting account and the subject account.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
+          type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
+
+    Label:
+      type: object
+      required:
+        - src
+        - uri
+        - val
+        - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource this label applies to
+        cid:
+          type: string
+          description: Optionally constrains label to specific version of record/blob
+        val:
+          type: string
+          description: The short string name of the value or type of this label
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label
+        cts:
+          type: string
+          format: date-time
+          description: Timestamp when this label was created
+        exp:
+          type: string
+          format: date-time
+          description: Timestamp at which this label expires
+
+    PostView:
+      type: object
+      required:
+        - uri
+        - cid
+        - author
+        - record
+        - indexedAt
+      properties:
+        uri:
+          type: string
+          description: AT-URI of the post
+        cid:
+          type: string
+        author:
+          $ref: '#/components/schemas/ProfileView'
+        record:
+          type: object
+          description: The post record
+          additionalProperties: true
+        embed:
+          type: object
+          description: Embedded content (images, external links, etc.)
+          additionalProperties: true
+        replyCount:
+          type: integer
+        repostCount:
+          type: integer
+        likeCount:
+          type: integer
+        quoteCount:
+          type: integer
+        indexedAt:
+          type: string
+          format: date-time
+        viewer:
+          type: object
+          description: Viewer relationship to this post
+          additionalProperties: true
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        threadgate:
+          type: object
+          additionalProperties: true
+
+    FeedViewPost:
+      type: object
+      required:
+        - post
+      properties:
+        post:
+          $ref: '#/components/schemas/PostView'
+        reply:
+          type: object
+          description: Reply threading information
+          properties:
+            root:
+              type: object
+              additionalProperties: true
+            parent:
+              type: object
+              additionalProperties: true
+            grandparentAuthor:
+              $ref: '#/components/schemas/ProfileView'
+        reason:
+          type: object
+          description: Reason for appearing in feed (repost, pin, etc.)
+          additionalProperties: true
+        feedContext:
+          type: string
+          description: Context provided by feed generator
+
+    Like:
+      type: object
+      required:
+        - indexedAt
+        - createdAt
+        - actor
+      properties:
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        actor:
+          $ref: '#/components/schemas/ProfileView'
+
+    Notification:
+      type: object
+      required:
+        - uri
+        - cid
+        - author
+        - reason
+        - record
+        - isRead
+        - indexedAt
+      properties:
+        uri:
+          type: string
+          description: AT-URI of the notification record
+        cid:
+          type: string
+        author:
+          $ref: '#/components/schemas/ProfileView'
+        reason:
+          type: string
+          description: Expected values are 'like', 'repost', 'follow', 'mention', 'reply', 'quote', 'starterpack-joined'
+          enum:
+            - like
+            - repost
+            - follow
+            - mention
+            - reply
+            - quote
+            - starterpack-joined
+        reasonSubject:
+          type: string
+          description: AT-URI of the record that is the subject of the notification
+        record:
+          type: object
+          additionalProperties: true
+        isRead:
+          type: boolean
+        indexedAt:
+          type: string
+          format: date-time
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'

@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/atproto/main/json-schema/atproto-profile-schema.json",
+  "title": "Bluesky Profile View Detailed (app.bsky.actor.defs#profileViewDetailed)",
+  "description": "Detailed profile view for a Bluesky actor (user), returned by app.bsky.actor.getProfile. Contains identity, display data, social graph counts, and viewer relationship metadata.",
+  "type": "object",
+  "required": ["did", "handle"],
+  "properties": {
+    "did": {
+      "type": "string",
+      "description": "Decentralized Identifier of the actor",
+      "pattern": "^did:[a-z]+:[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$"
+    },
+    "handle": {
+      "type": "string",
+      "description": "AT Protocol handle (e.g., alice.bsky.social)"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable display name",
+      "maxLength": 640
+    },
+    "description": {
+      "type": "string",
+      "description": "Free-form profile bio text",
+      "maxLength": 2560
+    },
+    "avatar": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the avatar image blob"
+    },
+    "banner": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the banner/header image blob"
+    },
+    "followersCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of accounts following this actor"
+    },
+    "followsCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of accounts this actor follows"
+    },
+    "postsCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of posts created by this actor"
+    },
+    "associated": {
+      "type": "object",
+      "description": "Associated resources (starter packs, feeds, lists, labeler info)",
+      "properties": {
+        "lists": { "type": "integer" },
+        "feedgens": { "type": "integer" },
+        "starterPacks": { "type": "integer" },
+        "labeler": { "type": "boolean" },
+        "chat": {
+          "type": "object",
+          "properties": {
+            "allowIncoming": {
+              "type": "string",
+              "enum": ["all", "none", "following"]
+            }
+          }
+        }
+      }
+    },
+    "indexedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when this account was first indexed by the AppView"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the account was created"
+    },
+    "viewer": {
+      "type": "object",
+      "description": "Metadata about the relationship between the requesting account and this actor",
+      "properties": {
+        "muted": { "type": "boolean" },
+        "blockedBy": { "type": "boolean" },
+        "blocking": {
+          "type": "string",
+          "description": "AT-URI of the blocking record if this viewer blocks the subject"
+        },
+        "following": {
+          "type": "string",
+          "description": "AT-URI of the follow record if this viewer follows the subject"
+        },
+        "followedBy": {
+          "type": "string",
+          "description": "AT-URI of the follow record if the subject follows this viewer"
+        },
+        "knownFollowers": {
+          "type": "object",
+          "properties": {
+            "count": { "type": "integer" },
+            "followers": {
+              "type": "array",
+              "items": { "type": "object", "additionalProperties": true }
+            }
+          }
+        }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "Labels applied to this actor by labelers",
+      "items": {
+        "type": "object",
+        "required": ["src", "uri", "val", "cts"],
+        "properties": {
+          "src": { "type": "string" },
+          "uri": { "type": "string" },
+          "val": { "type": "string" },
+          "cts": { "type": "string", "format": "date-time" },
+          "neg": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "did": "did:plc:z72i7hdynmk6r22z27h6tvur",
+      "handle": "bsky.app",
+      "displayName": "Bluesky",
+      "description": "The official Bluesky account.",
+      "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:z72i7hdynmk6r22z27h6tvur/bafkreidzk7hzovztwwnsgxvdpbdirn24cvkgbzmchvuiqqhivhzr5m5fxy@jpeg",
+      "followersCount": 847000,
+      "followsCount": 412,
+      "postsCount": 3819,
+      "indexedAt": "2023-04-24T18:00:00.000Z",
+      "createdAt": "2023-04-24T18:00:00.000Z"
+    }
+  ]
+}

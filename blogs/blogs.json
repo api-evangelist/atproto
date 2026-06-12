@@ -1,0 +1,14 @@
+{
+  "repo": "atproto",
+  "feeds": [
+    {
+      "source": "https://atproto.com/blog",
+      "feed_url": "https://atproto.com/blog/rss.xml",
+      "title": "AT Protocol Blog",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-12T00:00:00Z"
+}

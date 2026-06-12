@@ -28,6 +28,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/atproto/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
+
 specificationVersion: '0.19'
 apis:
   - aid: atproto:com-atproto
@@ -52,6 +53,8 @@ apis:
         url: https://atproto.com/specs/xrpc
       - type: Documentation
         url: https://atproto.com/guides/overview
+      - type: OpenAPI
+        url: openapi/atproto-com-atproto-openapi.yml
   - aid: atproto:app-bsky
     name: Bluesky Application API (app.bsky)
     description: >-
@@ -74,6 +77,8 @@ apis:
         url: https://docs.bsky.app/docs/advanced-guides/atproto
       - type: Documentation
         url: https://endpoints.bsky.app/
+      - type: OpenAPI
+        url: openapi/atproto-app-bsky-openapi.yml
   - aid: atproto:firehose
     name: AT Protocol Firehose (Event Stream)
     description: >-

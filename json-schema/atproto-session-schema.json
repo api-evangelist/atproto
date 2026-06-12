@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/atproto/main/json-schema/atproto-session-schema.json",
+  "title": "AT Protocol Session",
+  "description": "Authentication session object returned by com.atproto.server.createSession and com.atproto.server.refreshSession. Contains JWT tokens for authenticated API access.",
+  "type": "object",
+  "required": ["accessJwt", "refreshJwt", "handle", "did"],
+  "properties": {
+    "accessJwt": {
+      "type": "string",
+      "description": "Short-lived access JWT for authenticating API requests"
+    },
+    "refreshJwt": {
+      "type": "string",
+      "description": "Long-lived refresh JWT for obtaining new access tokens"
+    },
+    "handle": {
+      "type": "string",
+      "description": "The user's AT Protocol handle (e.g., user.bsky.social)",
+      "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+    },
+    "did": {
+      "type": "string",
+      "description": "The user's Decentralized Identifier (DID)",
+      "pattern": "^did:[a-z]+:[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$"
+    },
+    "didDoc": {
+      "type": "object",
+      "description": "Full W3C DID document for the user",
+      "additionalProperties": true
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address on file for the account"
+    },
+    "emailConfirmed": {
+      "type": "boolean",
+      "description": "Whether the email address has been verified"
+    },
+    "emailAuthFactor": {
+      "type": "boolean",
+      "description": "Whether email-based two-factor authentication is enabled"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the account is currently active"
+    },
+    "status": {
+      "type": "string",
+      "description": "Account status if not active",
+      "enum": ["takendown", "suspended", "deactivated"]
+    }
+  },
+  "examples": [
+    {
+      "accessJwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJzY29wZSI6ImNvbS5hdHByb3RvLmFjY2VzcyIsInN1YiI6ImRpZDpwbGM6ZXhhbXBsZTEyMyIsImlhdCI6MTcxNzg0NjQwMCwiZXhwIjoxNzE3ODQ3MzAwfQ.signature",
+      "refreshJwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJzY29wZSI6ImNvbS5hdHByb3RvLnJlZnJlc2giLCJzdWIiOiJkaWQ6cGxjOmV4YW1wbGUxMjMiLCJpYXQiOjE3MTc4NDY0MDAsImV4cCI6MTcxODQ1MTIwMH0.signature",
+      "handle": "alice.bsky.social",
+      "did": "did:plc:example123abc",
+      "email": "alice@example.com",
+      "emailConfirmed": true,
+      "emailAuthFactor": false,
+      "active": true
+    }
+  ]
+}
