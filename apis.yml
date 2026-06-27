@@ -112,9 +112,9 @@ common:
     url: https://twitter.com/at_protocol
   - type: StatusPage
     url: https://status.bsky.app/
-  - type: SDK
+  - type: SDKs
     url: https://github.com/bluesky-social/atproto/tree/main/packages
-  - type: SDK
+  - type: SDKs
     url: https://github.com/bluesky-social/indigo
   - type: Plans
     url: plans/atproto-plans-pricing.yml
