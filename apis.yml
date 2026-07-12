@@ -98,6 +98,10 @@ apis:
       - type: Documentation
         url: https://atproto.com/specs/event-stream
 common:
+  - type: DomainSecurity
+    url: security/atproto-domain-security.yml
+  - type: Authentication
+    url: authentication/atproto-authentication.yml
   - type: Website
     url: https://atproto.com/
   - type: Documentation
