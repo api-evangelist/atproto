@@ -1,0 +1,452 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/atproto-app-bsky-openapi.yml, openapi/atproto-com-atproto-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 37
+  by_action_class:
+    connected: 26
+    acting: 11
+  by_consequence:
+    read: 26
+    write: 11
+  human_in_the_loop_required: 0
+operations:
+- path: /app.bsky.actor.getProfile
+  method: get
+  operationId: app_bsky_actor_getProfile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.actor.getProfiles
+  method: get
+  operationId: app_bsky_actor_getProfiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.actor.searchActors
+  method: get
+  operationId: app_bsky_actor_searchActors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.actor.getPreferences
+  method: get
+  operationId: app_bsky_actor_getPreferences
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.actor.putPreferences
+  method: post
+  operationId: app_bsky_actor_putPreferences
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /app.bsky.actor.getSuggestions
+  method: get
+  operationId: app_bsky_actor_getSuggestions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.feed.getTimeline
+  method: get
+  operationId: app_bsky_feed_getTimeline
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.feed.getAuthorFeed
+  method: get
+  operationId: app_bsky_feed_getAuthorFeed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.feed.getPosts
+  method: get
+  operationId: app_bsky_feed_getPosts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.feed.getPostThread
+  method: get
+  operationId: app_bsky_feed_getPostThread
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.feed.searchPosts
+  method: get
+  operationId: app_bsky_feed_searchPosts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.feed.getLikes
+  method: get
+  operationId: app_bsky_feed_getLikes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.graph.getFollowers
+  method: get
+  operationId: app_bsky_graph_getFollowers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.graph.getFollows
+  method: get
+  operationId: app_bsky_graph_getFollows
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.notification.listNotifications
+  method: get
+  operationId: app_bsky_notification_listNotifications
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /app.bsky.notification.getUnreadCount
+  method: get
+  operationId: app_bsky_notification_getUnreadCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.server.describeServer
+  method: get
+  operationId: com_atproto_server_describeServer
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.server.createSession
+  method: post
+  operationId: com_atproto_server_createSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.server.deleteSession
+  method: post
+  operationId: com_atproto_server_deleteSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.server.getSession
+  method: get
+  operationId: com_atproto_server_getSession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.server.refreshSession
+  method: post
+  operationId: com_atproto_server_refreshSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.server.createAccount
+  method: post
+  operationId: com_atproto_server_createAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.server.deleteAccount
+  method: post
+  operationId: com_atproto_server_deleteAccount
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.server.checkAccountStatus
+  method: get
+  operationId: com_atproto_server_checkAccountStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.identity.resolveHandle
+  method: get
+  operationId: com_atproto_identity_resolveHandle
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.identity.updateHandle
+  method: post
+  operationId: com_atproto_identity_updateHandle
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.identity.resolveDid
+  method: get
+  operationId: com_atproto_identity_resolveDid
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.repo.getRecord
+  method: get
+  operationId: com_atproto_repo_getRecord
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.repo.createRecord
+  method: post
+  operationId: com_atproto_repo_createRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.repo.putRecord
+  method: post
+  operationId: com_atproto_repo_putRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.repo.deleteRecord
+  method: post
+  operationId: com_atproto_repo_deleteRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.repo.listRecords
+  method: get
+  operationId: com_atproto_repo_listRecords
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.repo.uploadBlob
+  method: post
+  operationId: com_atproto_repo_uploadBlob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /com.atproto.repo.describeRepo
+  method: get
+  operationId: com_atproto_repo_describeRepo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.sync.getRepo
+  method: get
+  operationId: com_atproto_sync_getRepo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.sync.getBlob
+  method: get
+  operationId: com_atproto_sync_getBlob
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /com.atproto.sync.listRepos
+  method: get
+  operationId: com_atproto_sync_listRepos
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
