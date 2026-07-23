@@ -1,0 +1,142 @@
+openapi: 3.0.3
+info:
+  title: Bluesky Application API (app.bsky) actor identity API
+  description: The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.
+  version: 1.0.0
+  contact:
+    name: Bluesky
+    url: https://docs.bsky.app/
+  license:
+    name: MIT / Apache-2.0
+    url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
+servers:
+- url: https://public.api.bsky.app/xrpc
+  description: Public AppView (unauthenticated read operations)
+- url: https://api.bsky.app/xrpc
+  description: Authenticated AppView (write operations)
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: identity
+  description: DID and handle resolution, identity management
+paths:
+  /com.atproto.identity.resolveHandle:
+    get:
+      operationId: com_atproto_identity_resolveHandle
+      summary: Resolve Handle
+      description: Resolves a handle (eg, username) to a DID.
+      tags:
+      - identity
+      security:
+      - {}
+      parameters:
+      - name: handle
+        in: query
+        required: true
+        description: The handle to resolve. If not supplied, will resolve the host's own handle.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Resolved DID
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - did
+                properties:
+                  did:
+                    type: string
+                    description: The DID of the resolved handle
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /com.atproto.identity.updateHandle:
+    post:
+      operationId: com_atproto_identity_updateHandle
+      summary: Update Handle
+      description: Updates the current account's handle.
+      tags:
+      - identity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - handle
+              properties:
+                handle:
+                  type: string
+                  description: The new handle.
+      responses:
+        '200':
+          description: Handle updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.identity.resolveDid:
+    get:
+      operationId: com_atproto_identity_resolveDid
+      summary: Resolve DID
+      description: Resolves a DID to a DID document.
+      tags:
+      - identity
+      security:
+      - {}
+      parameters:
+      - name: did
+        in: query
+        required: true
+        description: The DID to resolve.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: DID document
+          content:
+            application/json:
+              schema:
+                type: object
+                description: DID document (W3C DID Core format)
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  responses:
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access JWT obtained from com.atproto.server.createSession
+externalDocs:
+  description: Bluesky HTTP API Reference
+  url: https://docs.bsky.app/docs/advanced-guides/atproto

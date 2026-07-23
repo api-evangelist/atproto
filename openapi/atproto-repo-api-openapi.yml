@@ -1,0 +1,449 @@
+openapi: 3.0.3
+info:
+  title: Bluesky Application API (app.bsky) actor repo API
+  description: The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.
+  version: 1.0.0
+  contact:
+    name: Bluesky
+    url: https://docs.bsky.app/
+  license:
+    name: MIT / Apache-2.0
+    url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
+servers:
+- url: https://public.api.bsky.app/xrpc
+  description: Public AppView (unauthenticated read operations)
+- url: https://api.bsky.app/xrpc
+  description: Authenticated AppView (write operations)
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: repo
+  description: Repository management, record CRUD operations
+paths:
+  /com.atproto.repo.getRecord:
+    get:
+      operationId: com_atproto_repo_getRecord
+      summary: Get Record
+      description: Get a single record from a repository. Does not require auth.
+      tags:
+      - repo
+      security:
+      - {}
+      parameters:
+      - name: repo
+        in: query
+        required: true
+        description: The handle or DID of the repo.
+        schema:
+          type: string
+      - name: collection
+        in: query
+        required: true
+        description: The NSID of the record collection.
+        schema:
+          type: string
+      - name: rkey
+        in: query
+        required: true
+        description: The Record Key.
+        schema:
+          type: string
+      - name: cid
+        in: query
+        required: false
+        description: The CID of the version of the record. If not specified, returns the most recent version.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Record data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepoRecord'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /com.atproto.repo.createRecord:
+    post:
+      operationId: com_atproto_repo_createRecord
+      summary: Create Record
+      description: Create a single new repository record. Requires auth, implemented by PDS.
+      tags:
+      - repo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRecordInput'
+      responses:
+        '200':
+          description: Record created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordRef'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.repo.putRecord:
+    post:
+      operationId: com_atproto_repo_putRecord
+      summary: Put Record
+      description: Write a repository record, creating or updating it as needed. Requires auth, implemented by PDS.
+      tags:
+      - repo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutRecordInput'
+      responses:
+        '200':
+          description: Record written
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordRef'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.repo.deleteRecord:
+    post:
+      operationId: com_atproto_repo_deleteRecord
+      summary: Delete Record
+      description: Delete a repository record, or ensure it doesn't exist. Implemented by PDS.
+      tags:
+      - repo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - repo
+              - collection
+              - rkey
+              properties:
+                repo:
+                  type: string
+                  description: The handle or DID of the repo (aka, current account).
+                collection:
+                  type: string
+                  description: The NSID of the record collection.
+                rkey:
+                  type: string
+                  description: The Record Key.
+                swapRecord:
+                  type: string
+                  description: Compare and swap with the previous record by CID.
+                swapCommit:
+                  type: string
+                  description: Compare and swap with the previous commit by CID.
+      responses:
+        '200':
+          description: Record deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  commit:
+                    $ref: '#/components/schemas/CommitMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.repo.listRecords:
+    get:
+      operationId: com_atproto_repo_listRecords
+      summary: List Records
+      description: List a range of records in a repository, matching a specific collection.
+      tags:
+      - repo
+      security:
+      - {}
+      parameters:
+      - name: repo
+        in: query
+        required: true
+        description: The handle or DID of the repo.
+        schema:
+          type: string
+      - name: collection
+        in: query
+        required: true
+        description: The NSID of the record type.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: reverse
+        in: query
+        required: false
+        description: Flag to reverse the order of the returned records.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of records
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - records
+                properties:
+                  cursor:
+                    type: string
+                  records:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RepoRecord'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /com.atproto.repo.uploadBlob:
+    post:
+      operationId: com_atproto_repo_uploadBlob
+      summary: Upload Blob
+      description: Upload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size) are enforced when the reference is created. Requires auth, implemented by PDS.
+      tags:
+      - repo
+      requestBody:
+        required: true
+        content:
+          '*/*':
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Blob uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - blob
+                properties:
+                  blob:
+                    $ref: '#/components/schemas/BlobRef'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.repo.describeRepo:
+    get:
+      operationId: com_atproto_repo_describeRepo
+      summary: Describe Repo
+      description: Get information about an account and repository, including the list of collections. Does not require auth.
+      tags:
+      - repo
+      security:
+      - {}
+      parameters:
+      - name: repo
+        in: query
+        required: true
+        description: The handle or DID of the repo.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Repository description
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepoDescription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    CreateRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - record
+      properties:
+        repo:
+          type: string
+          description: The handle or DID of the repo (aka, current account).
+        collection:
+          type: string
+          description: The NSID of the record collection.
+        rkey:
+          type: string
+          description: The Record Key.
+        validate:
+          type: boolean
+          description: Can be set to 'false' to skip Lexicon schema validation of record data.
+        record:
+          type: object
+          description: The record itself. Must contain a $type field.
+          additionalProperties: true
+        swapCommit:
+          type: string
+          description: Compare and swap with the previous commit by CID.
+    BlobRef:
+      type: object
+      required:
+      - $type
+      - ref
+      - mimeType
+      - size
+      properties:
+        $type:
+          type: string
+          example: blob
+        ref:
+          type: object
+          properties:
+            $link:
+              type: string
+        mimeType:
+          type: string
+        size:
+          type: integer
+    RepoDescription:
+      type: object
+      required:
+      - handle
+      - did
+      - didDoc
+      - collections
+      - handleIsCorrect
+      properties:
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+        collections:
+          type: array
+          description: List of all the collections (NSIDs) an account has at least one record in.
+          items:
+            type: string
+        handleIsCorrect:
+          type: boolean
+          description: Indicates if handle is currently valid (resolves correctly)
+    PutRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - rkey
+      - record
+      properties:
+        repo:
+          type: string
+        collection:
+          type: string
+        rkey:
+          type: string
+        validate:
+          type: boolean
+        record:
+          type: object
+          additionalProperties: true
+        swapRecord:
+          type: string
+        swapCommit:
+          type: string
+    CommitMeta:
+      type: object
+      required:
+      - cid
+      - rev
+      properties:
+        cid:
+          type: string
+        rev:
+          type: string
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    RepoRecord:
+      type: object
+      required:
+      - uri
+      - value
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier (CID)
+        value:
+          type: object
+          description: The record data
+          additionalProperties: true
+    RecordRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier
+        commit:
+          $ref: '#/components/schemas/CommitMeta'
+        validationStatus:
+          type: string
+          enum:
+          - valid
+          - unknown
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access JWT obtained from com.atproto.server.createSession
+externalDocs:
+  description: Bluesky HTTP API Reference
+  url: https://docs.bsky.app/docs/advanced-guides/atproto

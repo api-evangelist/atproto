@@ -1,0 +1,245 @@
+openapi: 3.0.3
+info:
+  title: Bluesky Application API (app.bsky) actor graph API
+  description: The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.
+  version: 1.0.0
+  contact:
+    name: Bluesky
+    url: https://docs.bsky.app/
+  license:
+    name: MIT / Apache-2.0
+    url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
+servers:
+- url: https://public.api.bsky.app/xrpc
+  description: Public AppView (unauthenticated read operations)
+- url: https://api.bsky.app/xrpc
+  description: Authenticated AppView (write operations)
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: graph
+  description: Graph operations — follows, blocks, lists, and mutes
+paths:
+  /app.bsky.graph.getFollowers:
+    get:
+      operationId: app_bsky_graph_getFollowers
+      summary: Get Followers
+      description: Enumerates accounts which follow a specified account (actor).
+      tags:
+      - graph
+      security:
+      - {}
+      - bearerAuth: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        description: Handle or DID of account to fetch followers of.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Followers list
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                - followers
+                properties:
+                  cursor:
+                    type: string
+                  subject:
+                    $ref: '#/components/schemas/ProfileView'
+                  followers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /app.bsky.graph.getFollows:
+    get:
+      operationId: app_bsky_graph_getFollows
+      summary: Get Follows
+      description: Enumerates accounts which a specified account (actor) follows.
+      tags:
+      - graph
+      security:
+      - {}
+      - bearerAuth: []
+      parameters:
+      - name: actor
+        in: query
+        required: true
+        description: Handle or DID of account to fetch follows of.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Follows list
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - subject
+                - follows
+                properties:
+                  cursor:
+                    type: string
+                  subject:
+                    $ref: '#/components/schemas/ProfileView'
+                  follows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileView'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+components:
+  schemas:
+    Label:
+      type: object
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource this label applies to
+        cid:
+          type: string
+          description: Optionally constrains label to specific version of record/blob
+        val:
+          type: string
+          description: The short string name of the value or type of this label
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label
+        cts:
+          type: string
+          format: date-time
+          description: Timestamp when this label was created
+        exp:
+          type: string
+          format: date-time
+          description: Timestamp at which this label expires
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ViewerState:
+      type: object
+      description: Metadata about the relationship between the requesting account and the subject account.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
+          type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
+    ProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
+          type: object
+          additionalProperties: true
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+  responses:
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access JWT obtained from com.atproto.server.createSession
+externalDocs:
+  description: Bluesky HTTP API Reference
+  url: https://docs.bsky.app/docs/advanced-guides/atproto

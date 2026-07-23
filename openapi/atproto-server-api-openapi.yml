@@ -1,0 +1,417 @@
+openapi: 3.0.3
+info:
+  title: Bluesky Application API (app.bsky) actor server API
+  description: The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.
+  version: 1.0.0
+  contact:
+    name: Bluesky
+    url: https://docs.bsky.app/
+  license:
+    name: MIT / Apache-2.0
+    url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
+servers:
+- url: https://public.api.bsky.app/xrpc
+  description: Public AppView (unauthenticated read operations)
+- url: https://api.bsky.app/xrpc
+  description: Authenticated AppView (write operations)
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: server
+  description: Server management, session creation, account administration
+paths:
+  /com.atproto.server.describeServer:
+    get:
+      operationId: com_atproto_server_describeServer
+      summary: Describe Server
+      description: Describes the server's account creation requirements and capabilities. Implemented by PDS. No authentication required.
+      tags:
+      - server
+      security:
+      - {}
+      responses:
+        '200':
+          description: Server description
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerDescription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /com.atproto.server.createSession:
+    post:
+      operationId: com_atproto_server_createSession
+      summary: Create Session
+      description: Create an authentication session (login).
+      tags:
+      - server
+      security:
+      - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionInput'
+      responses:
+        '200':
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.server.deleteSession:
+    post:
+      operationId: com_atproto_server_deleteSession
+      summary: Delete Session
+      description: Delete the current session (logout).
+      tags:
+      - server
+      responses:
+        '200':
+          description: Session deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.server.getSession:
+    get:
+      operationId: com_atproto_server_getSession
+      summary: Get Session
+      description: Get information about the current auth session.
+      tags:
+      - server
+      responses:
+        '200':
+          description: Current session info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.server.refreshSession:
+    post:
+      operationId: com_atproto_server_refreshSession
+      summary: Refresh Session
+      description: Refresh an authentication session using a refresh JWT.
+      tags:
+      - server
+      security:
+      - refreshAuth: []
+      responses:
+        '200':
+          description: Session refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.server.createAccount:
+    post:
+      operationId: com_atproto_server_createAccount
+      summary: Create Account
+      description: Create an account. Implemented by PDS.
+      tags:
+      - server
+      security:
+      - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountInput'
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountOutput'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /com.atproto.server.deleteAccount:
+    post:
+      operationId: com_atproto_server_deleteAccount
+      summary: Delete Account
+      description: Delete an actor's account with a token and password.
+      tags:
+      - server
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - did
+              - password
+              - token
+              properties:
+                did:
+                  type: string
+                  description: DID of account to delete
+                password:
+                  type: string
+                token:
+                  type: string
+                  description: Confirmation token received via email
+      responses:
+        '200':
+          description: Account deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /com.atproto.server.checkAccountStatus:
+    get:
+      operationId: com_atproto_server_checkAccountStatus
+      summary: Check Account Status
+      description: Returns the status of an account, especially as pertaining to import or recovery.
+      tags:
+      - server
+      responses:
+        '200':
+          description: Account status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    CreateAccountInput:
+      type: object
+      required:
+      - handle
+      properties:
+        email:
+          type: string
+        handle:
+          type: string
+          description: Requested handle for the account
+        did:
+          type: string
+          description: Pre-existing atproto DID, being imported to a new account
+        inviteCode:
+          type: string
+        verificationCode:
+          type: string
+        verificationPhone:
+          type: string
+        password:
+          type: string
+          description: Initial account password
+        recoveryKey:
+          type: string
+          description: DID PLC rotation key (recovery key)
+    CreateAccountOutput:
+      type: object
+      required:
+      - accessJwt
+      - refreshJwt
+      - handle
+      - did
+      properties:
+        accessJwt:
+          type: string
+        refreshJwt:
+          type: string
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+    CreateSessionInput:
+      type: object
+      required:
+      - identifier
+      - password
+      properties:
+        identifier:
+          type: string
+          description: Handle or other identifier supported by the server
+        password:
+          type: string
+        authFactorToken:
+          type: string
+          description: Two-factor authentication token
+        allowTakendown:
+          type: boolean
+          description: When true, return a narrow-scoped token for takendown accounts
+    AccountStatus:
+      type: object
+      required:
+      - activated
+      - validDid
+      - repoCommit
+      - repoRev
+      - repoBlocks
+      - indexedRecords
+      - privateStateValues
+      - expectedBlobs
+      - importedBlobs
+      properties:
+        activated:
+          type: boolean
+        validDid:
+          type: boolean
+        repoCommit:
+          type: string
+        repoRev:
+          type: string
+        repoBlocks:
+          type: integer
+        indexedRecords:
+          type: integer
+        privateStateValues:
+          type: integer
+        expectedBlobs:
+          type: integer
+        importedBlobs:
+          type: integer
+    Session:
+      type: object
+      required:
+      - accessJwt
+      - refreshJwt
+      - handle
+      - did
+      properties:
+        accessJwt:
+          type: string
+          description: Short-lived access token
+        refreshJwt:
+          type: string
+          description: Long-lived refresh token
+        handle:
+          type: string
+          description: The user's handle
+        did:
+          type: string
+          description: The user's DID (Decentralized Identifier)
+        didDoc:
+          type: object
+          description: Full DID document
+          additionalProperties: true
+        email:
+          type: string
+          description: Email address (if available)
+        emailConfirmed:
+          type: boolean
+        emailAuthFactor:
+          type: boolean
+        active:
+          type: boolean
+        status:
+          type: string
+          description: Account status if not active
+          enum:
+          - takendown
+          - suspended
+          - deactivated
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    SessionInfo:
+      type: object
+      required:
+      - handle
+      - did
+      properties:
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+        email:
+          type: string
+        emailConfirmed:
+          type: boolean
+        emailAuthFactor:
+          type: boolean
+        active:
+          type: boolean
+        status:
+          type: string
+    ServerDescription:
+      type: object
+      required:
+      - did
+      - availableUserDomains
+      properties:
+        inviteCodeRequired:
+          type: boolean
+          description: If true, an invite code must be supplied to create an account
+        phoneVerificationRequired:
+          type: boolean
+          description: If true, a phone verification token must be supplied
+        availableUserDomains:
+          type: array
+          description: List of domain suffixes that can be used in account handles
+          items:
+            type: string
+        links:
+          type: object
+          properties:
+            privacyPolicy:
+              type: string
+              format: uri
+            termsOfService:
+              type: string
+              format: uri
+        contact:
+          type: object
+          properties:
+            email:
+              type: string
+        did:
+          type: string
+          description: DID of the server
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access JWT obtained from com.atproto.server.createSession
+externalDocs:
+  description: Bluesky HTTP API Reference
+  url: https://docs.bsky.app/docs/advanced-guides/atproto
