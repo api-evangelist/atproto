@@ -1,0 +1,28 @@
+{
+  "provider": "atproto",
+  "sources": [
+    "atproto-actor-api-openapi.yml",
+    "atproto-feed-api-openapi.yml",
+    "atproto-graph-api-openapi.yml",
+    "atproto-identity-api-openapi.yml",
+    "atproto-notification-api-openapi.yml",
+    "atproto-repo-api-openapi.yml",
+    "atproto-server-api-openapi.yml",
+    "atproto-sync-api-openapi.yml"
+  ],
+  "outputs": [
+    "atproto-actor-api-openapi.yml",
+    "atproto-feed-api-openapi.yml",
+    "atproto-graph-api-openapi.yml",
+    "atproto-identity-api-openapi.yml",
+    "atproto-notification-api-openapi.yml",
+    "atproto-repo-api-openapi.yml",
+    "atproto-server-api-openapi.yml",
+    "atproto-sync-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
