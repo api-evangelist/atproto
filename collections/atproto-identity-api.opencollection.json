@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Application API (app.bsky) actor identity API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "identity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resolve Handle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle",
+            "params": [
+              {
+                "name": "handle",
+                "value": "",
+                "type": "query",
+                "description": "The handle to resolve. If not supplied, will resolve the host's own handle."
+              }
+            ]
+          },
+          "docs": "Resolves a handle (eg, username) to a DID."
+        },
+        {
+          "info": {
+            "name": "Update Handle",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.identity.updateHandle",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the current account's handle."
+        },
+        {
+          "info": {
+            "name": "Resolve DID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.identity.resolveDid",
+            "params": [
+              {
+                "name": "did",
+                "value": "",
+                "type": "query",
+                "description": "The DID to resolve."
+              }
+            ]
+          },
+          "docs": "Resolves a DID to a DID document."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

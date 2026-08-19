@@ -1,0 +1,453 @@
+{
+  "item": [
+    {
+      "id": "dc64af1e-9122-4a3d-81e1-468ca7d1c058",
+      "name": "sync",
+      "description": {
+        "content": "Data synchronization, firehose, blob access",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ae0ba916-875c-4169-9476-ced89f2b0f57",
+          "name": "Get Repo",
+          "request": {
+            "name": "Get Repo",
+            "description": {
+              "content": "Download a repository export as CAR file. Optionally only a subset of commits. Does not require auth; implemented by PDS.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "com.atproto.sync.getRepo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "did",
+                  "value": "<string>",
+                  "description": "(Required) The DID of the repo."
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "The revision (''rev'') of the repo to create a diff from."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.ipld.car"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "cc780ff7-4b85-4490-822c-e50707daef56",
+              "name": "CAR file binary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "com.atproto.sync.getRepo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "did",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.ipld.car"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.ipld.car"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff4ddeaa-be49-4e70-8ab8-1b0e2a1fa746",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "com.atproto.sync.getRepo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "did",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6aa1d3b0-bde1-4bd9-927c-d318072edd90",
+          "name": "Get Blob",
+          "request": {
+            "name": "Get Blob",
+            "description": {
+              "content": "Get a blob associated with a given account. Does not require auth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "com.atproto.sync.getBlob"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "did",
+                  "value": "<string>",
+                  "description": "(Required) The DID of the account."
+                },
+                {
+                  "disabled": false,
+                  "key": "cid",
+                  "value": "<string>",
+                  "description": "(Required) The CID of the blob to fetch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "d15ee4f3-dd11-4f03-8846-85293f14d6a4",
+              "name": "Blob data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "com.atproto.sync.getBlob"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "did",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "37ed4ce2-247b-4fa2-95e5-2f8b0a6345d0",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "com.atproto.sync.getBlob"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "did",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7003236-524b-43de-83ee-0d60023b81a7",
+          "name": "List Repos",
+          "request": {
+            "name": "List Repos",
+            "description": {
+              "content": "Enumerates all the DID, rev, and CID triples for all repos hosted by this service.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "com.atproto.sync.listRepos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "500"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "454b9b87-e5aa-4622-81d8-a0f166146c0f",
+              "name": "List of repos",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "com.atproto.sync.listRepos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"repos\": [\n    {\n      \"did\": \"string\",\n      \"head\": \"string\",\n      \"rev\": \"string\",\n      \"active\": false,\n      \"status\": \"string\"\n    },\n    {\n      \"did\": \"string\",\n      \"head\": \"string\",\n      \"rev\": \"string\",\n      \"active\": false,\n      \"status\": \"string\"\n    }\n  ],\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a866c514-2ca2-4b99-a82a-9a84c59dde8c",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "com.atproto.sync.listRepos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.api.bsky.app/xrpc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "10961bb0-7a66-4fd3-9895-1ce5f81a439c",
+    "name": "Bluesky Application API (app.bsky) actor sync API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.\n\nContact Support:\n Name: Bluesky",
+      "type": "text/plain"
+    }
+  }
+}

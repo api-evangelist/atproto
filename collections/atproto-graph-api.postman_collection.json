@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "27b2204b-377a-4ad0-a5d1-6d217fec1f50",
+      "name": "graph",
+      "description": {
+        "content": "Graph operations — follows, blocks, lists, and mutes",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ab03913d-21e2-4019-adde-c0e40f50701a",
+          "name": "Get Followers",
+          "request": {
+            "name": "Get Followers",
+            "description": {
+              "content": "Enumerates accounts which follow a specified account (actor).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.graph.getFollowers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actor",
+                  "value": "<string>",
+                  "description": "(Required) Handle or DID of account to fetch followers of."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "9bea12ef-4a92-4b94-8ba8-b3370a8059f6",
+              "name": "Followers list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.graph.getFollowers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subject\": {\n    \"did\": \"string\",\n    \"handle\": \"string\",\n    \"displayName\": \"string\",\n    \"description\": \"string\",\n    \"avatar\": \"http://UuEZazsRuMeku.mdiyZ.5B6rUqSQBgOPn64Oj+wGm8-MWMRRKb8WImRTWl5VAqQHFq\",\n    \"associated\": {\n      \"key_0\": true\n    },\n    \"indexedAt\": \"2005-02-02T14:39:02.547Z\",\n    \"createdAt\": \"2014-11-11T18:11:48.915Z\",\n    \"viewer\": {\n      \"muted\": true,\n      \"mutedByList\": {\n        \"key_0\": \"string\"\n      },\n      \"blockedBy\": false,\n      \"blocking\": \"string\",\n      \"blockingByList\": {\n        \"key_0\": true\n      },\n      \"following\": \"string\",\n      \"followedBy\": \"string\",\n      \"knownFollowers\": {\n        \"key_0\": 4098.382344720128\n      }\n    },\n    \"labels\": [\n      {\n        \"src\": \"string\",\n        \"uri\": \"string\",\n        \"val\": \"string\",\n        \"cts\": \"2010-12-14T11:55:55.701Z\",\n        \"ver\": 2311,\n        \"cid\": \"string\",\n        \"neg\": true,\n        \"exp\": \"1975-12-10T07:47:53.573Z\"\n      },\n      {\n        \"src\": \"string\",\n        \"uri\": \"string\",\n        \"val\": \"string\",\n        \"cts\": \"1958-08-29T16:20:38.432Z\",\n        \"ver\": 1729,\n        \"cid\": \"string\",\n        \"neg\": true,\n        \"exp\": \"1996-03-08T23:45:16.154Z\"\n      }\n    ]\n  },\n  \"followers\": [\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"http://ephW.bzvxL-gGuTan3CNUZQLr4\",\n      \"associated\": {\n        \"key_0\": true,\n        \"key_1\": \"string\",\n        \"key_2\": 7277.979701195904\n      },\n      \"indexedAt\": \"1962-07-04T03:56:15.406Z\",\n      \"createdAt\": \"1982-10-22T19:18:13.998Z\",\n      \"viewer\": {\n        \"muted\": true,\n        \"mutedByList\": {\n          \"key_0\": false\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": 7829.297676162565,\n          \"key_4\": 9124.278515442229\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": 8596,\n          \"key_1\": false\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1971-02-13T20:35:50.823Z\",\n          \"ver\": 2786,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1965-02-28T04:44:48.134Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2020-03-11T06:02:29.674Z\",\n          \"ver\": 2340,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1966-02-08T04:17:44.026Z\"\n        }\n      ]\n    },\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://upWwJctcyLUcHK.lxkyS1YzsKhtwzgP-TVCVKZtvaRkpFtxIuP3Bk10kB.B\",\n      \"associated\": {\n        \"key_0\": \"string\"\n      },\n      \"indexedAt\": \"1965-12-20T01:16:22.491Z\",\n      \"createdAt\": \"1959-03-13T12:08:43.892Z\",\n      \"viewer\": {\n        \"muted\": true,\n        \"mutedByList\": {\n          \"key_0\": false\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": 7089.20197214804,\n          \"key_1\": true,\n          \"key_2\": \"string\"\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": 2126.385051175386,\n          \"key_1\": false\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1966-01-05T05:59:32.565Z\",\n          \"ver\": 474,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"2007-12-08T03:44:25.984Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1995-08-01T23:14:13.028Z\",\n          \"ver\": 5277,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1999-07-28T09:56:22.708Z\"\n        }\n      ]\n    }\n  ],\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fda1981a-d8b2-498a-9ada-0d6b6032a648",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.graph.getFollowers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bdd4ac65-cbd4-4456-a356-258fbe4961f6",
+          "name": "Get Follows",
+          "request": {
+            "name": "Get Follows",
+            "description": {
+              "content": "Enumerates accounts which a specified account (actor) follows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.graph.getFollows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actor",
+                  "value": "<string>",
+                  "description": "(Required) Handle or DID of account to fetch follows of."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "087c0f62-861f-4dbf-b59e-8b5d4caccf10",
+              "name": "Follows list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.graph.getFollows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subject\": {\n    \"did\": \"string\",\n    \"handle\": \"string\",\n    \"displayName\": \"string\",\n    \"description\": \"string\",\n    \"avatar\": \"https://sRBOyxhfkLdknwtnpacoQ.idnhnfTyC1HWF21aiB+u,QffHkpF6Yz,QtFNUr+eP5hCKnr\",\n    \"associated\": {\n      \"key_0\": true,\n      \"key_1\": 1242.8005235144835\n    },\n    \"indexedAt\": \"1968-04-24T09:42:18.664Z\",\n    \"createdAt\": \"1949-04-15T03:08:30.600Z\",\n    \"viewer\": {\n      \"muted\": false,\n      \"mutedByList\": {\n        \"key_0\": 6301.053405254871,\n        \"key_1\": 6856.334518090967,\n        \"key_2\": true\n      },\n      \"blockedBy\": true,\n      \"blocking\": \"string\",\n      \"blockingByList\": {\n        \"key_0\": 7431.200333585237\n      },\n      \"following\": \"string\",\n      \"followedBy\": \"string\",\n      \"knownFollowers\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2403\n      }\n    },\n    \"labels\": [\n      {\n        \"src\": \"string\",\n        \"uri\": \"string\",\n        \"val\": \"string\",\n        \"cts\": \"1957-10-22T23:38:55.455Z\",\n        \"ver\": 3060,\n        \"cid\": \"string\",\n        \"neg\": true,\n        \"exp\": \"1964-04-23T23:34:14.029Z\"\n      },\n      {\n        \"src\": \"string\",\n        \"uri\": \"string\",\n        \"val\": \"string\",\n        \"cts\": \"2004-09-07T01:09:20.629Z\",\n        \"ver\": 9864,\n        \"cid\": \"string\",\n        \"neg\": true,\n        \"exp\": \"1962-01-12T11:41:34.367Z\"\n      }\n    ]\n  },\n  \"follows\": [\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://DCBhURedKteM.vbz,iNxmhzoIRKeKy\",\n      \"associated\": {\n        \"key_0\": 3151.689496651885\n      },\n      \"indexedAt\": \"2010-08-31T10:41:57.913Z\",\n      \"createdAt\": \"2017-09-06T05:36:39.273Z\",\n      \"viewer\": {\n        \"muted\": false,\n        \"mutedByList\": {\n          \"key_0\": \"string\"\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": false,\n          \"key_1\": 1309.092129152759,\n          \"key_2\": 3710\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1969-12-25T20:07:32.281Z\",\n          \"ver\": 1376,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1977-01-17T17:20:48.983Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1949-03-11T06:53:24.019Z\",\n          \"ver\": 2824,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"2002-02-02T22:52:19.878Z\"\n        }\n      ]\n    },\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://FMeYmUCQxVZhOOteFaF.omivubOg4a2YMKZv8y-j5AGljmVlrVMnQTWuAE4UCsHUlhV9fo-rtQpHscZwZATGK\",\n      \"associated\": {\n        \"key_0\": \"string\",\n        \"key_1\": true\n      },\n      \"indexedAt\": \"1988-03-21T23:51:58.656Z\",\n      \"createdAt\": \"1969-10-13T11:30:27.679Z\",\n      \"viewer\": {\n        \"muted\": false,\n        \"mutedByList\": {\n          \"key_0\": true,\n          \"key_1\": \"string\"\n        },\n        \"blockedBy\": false,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": 547.1050523019361,\n          \"key_1\": 8859,\n          \"key_2\": 6215\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": false,\n          \"key_1\": 9752.156222720738\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2002-07-30T22:43:25.755Z\",\n          \"ver\": 817,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1956-06-17T19:48:13.851Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1960-10-05T17:24:05.007Z\",\n          \"ver\": 3756,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"2001-05-01T09:33:50.349Z\"\n        }\n      ]\n    }\n  ],\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bdd6d3c-2274-480a-bbab-6a08112ff6fe",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.graph.getFollows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.api.bsky.app/xrpc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f78bc24e-154d-438c-b3ec-cc272b0d5ab4",
+    "name": "Bluesky Application API (app.bsky) actor graph API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.\n\nContact Support:\n Name: Bluesky",
+      "type": "text/plain"
+    }
+  }
+}

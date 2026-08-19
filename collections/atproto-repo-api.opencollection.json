@@ -1,0 +1,177 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Application API (app.bsky) actor repo API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "repo",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.getRecord",
+            "params": [
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "The handle or DID of the repo."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "query",
+                "description": "The NSID of the record collection."
+              },
+              {
+                "name": "rkey",
+                "value": "",
+                "type": "query",
+                "description": "The Record Key."
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "query",
+                "description": "The CID of the version of the record. If not specified, returns the most recent version."
+              }
+            ]
+          },
+          "docs": "Get a single record from a repository. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Create Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.createRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a single new repository record. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Put Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.putRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Write a repository record, creating or updating it as needed. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Delete Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.deleteRecord",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a repository record, or ensure it doesn't exist. Implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "List Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.listRecords",
+            "params": [
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "The handle or DID of the repo."
+              },
+              {
+                "name": "collection",
+                "value": "",
+                "type": "query",
+                "description": "The NSID of the record type."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "reverse",
+                "value": "",
+                "type": "query",
+                "description": "Flag to reverse the order of the returned records."
+              }
+            ]
+          },
+          "docs": "List a range of records in a repository, matching a specific collection."
+        },
+        {
+          "info": {
+            "name": "Upload Blob",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.uploadBlob"
+          },
+          "docs": "Upload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size) are enforced when the reference is created. Requires auth, implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Describe Repo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.repo.describeRepo",
+            "params": [
+              {
+                "name": "repo",
+                "value": "",
+                "type": "query",
+                "description": "The handle or DID of the repo."
+              }
+            ]
+          },
+          "docs": "Get information about an account and repository, including the list of collections. Does not require auth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

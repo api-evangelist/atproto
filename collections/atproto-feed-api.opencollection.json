@@ -1,0 +1,248 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Application API (app.bsky) actor feed API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "feed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Timeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getTimeline",
+            "params": [
+              {
+                "name": "algorithm",
+                "value": "",
+                "type": "query",
+                "description": "Variant algorithm for timeline. Implementation-specific."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a view of the requesting account's home timeline. This is expected to be some form of reverse-chronological feed."
+        },
+        {
+          "info": {
+            "name": "Get Author Feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed",
+            "params": [
+              {
+                "name": "actor",
+                "value": "",
+                "type": "query",
+                "description": "Handle or DID of account to fetch feed of."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Combinations of post/repost types to include in response."
+              },
+              {
+                "name": "includePins",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a view of an actor's 'author feed' (a.k.a. profile feed). Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Get Posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getPosts",
+            "params": [
+              {
+                "name": "uris",
+                "value": "",
+                "type": "query",
+                "description": "List of post AT-URIs to fetch. Maximum 25."
+              }
+            ]
+          },
+          "docs": "Gets post views for a specified list of posts (by AT-URI). Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Get Post Thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread",
+            "params": [
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "Reference (AT-URI) to post record."
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "query",
+                "description": "How many levels of reply depth should be included in response."
+              },
+              {
+                "name": "parentHeight",
+                "value": "",
+                "type": "query",
+                "description": "How many levels of parent (and grandparent, etc) post to include."
+              }
+            ]
+          },
+          "docs": "Get posts in a thread. Does not require auth, but additional metadata and filtering will be applied for authed requests."
+        },
+        {
+          "info": {
+            "name": "Search Posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string; syntax, operators, and ranking of results subject to change."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Filter results for posts after the indicated datetime (inclusive). Expected to use 'sortAt' timestamp, which may not match 'createdAt'."
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Filter results for posts before the indicated datetime (not inclusive)."
+              },
+              {
+                "name": "mentions",
+                "value": "",
+                "type": "query",
+                "description": "Filter to posts which mention the given account. Handles are resolved to DID before query. Only matches rich-text facet mentions."
+              },
+              {
+                "name": "author",
+                "value": "",
+                "type": "query",
+                "description": "Filter to posts by the given account."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "Filter to posts in the given language."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter to posts with the given tag (hashtag), based on rich-text facet or tag field. Do not include the '#' prefix."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Find posts matching search criteria, returning views of those posts."
+        },
+        {
+          "info": {
+            "name": "Get Likes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getLikes",
+            "params": [
+              {
+                "name": "uri",
+                "value": "",
+                "type": "query",
+                "description": "AT-URI of the subject (eg, a post record)."
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "query",
+                "description": "CID of the subject record (optional, to align with a specific version of the record)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get like records which reference a subject (by AT-URI with optional CID)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,515 @@
+{
+  "item": [
+    {
+      "id": "32b848af-8828-4b5a-ba1f-afba2f2e9a9f",
+      "name": "notification",
+      "description": {
+        "content": "Notification management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "69f722e5-4eb3-4055-88e3-598231b99236",
+          "name": "List Notifications",
+          "request": {
+            "name": "List Notifications",
+            "description": {
+              "content": "Enumerate notifications for the requesting account. Requires auth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.notification.listNotifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "reasons",
+                  "value": "<string>",
+                  "description": "Notification reasons to include in response."
+                },
+                {
+                  "disabled": false,
+                  "key": "reasons",
+                  "value": "<string>",
+                  "description": "Notification reasons to include in response."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "priority",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "seenAt",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e57409a-03fa-411c-9e60-edb93ca3f370",
+              "name": "Notifications",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.notification.listNotifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reasons",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reasons",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seenAt",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notifications\": [\n    {\n      \"uri\": \"string\",\n      \"cid\": \"string\",\n      \"author\": {\n        \"did\": \"string\",\n        \"handle\": \"string\",\n        \"displayName\": \"string\",\n        \"description\": \"string\",\n        \"avatar\": \"https://WSWaWRMDFZvypgCYVm.oqij2OlOTvsSeEL+goGYG.lIoPor++Xun9AjIyAYJTuKkQoSzMqxZ5tljM\",\n        \"associated\": {\n          \"key_0\": 2665.325737703451\n        },\n        \"indexedAt\": \"1958-11-02T16:14:05.596Z\",\n        \"createdAt\": \"2005-03-02T04:10:10.654Z\",\n        \"viewer\": {\n          \"muted\": true,\n          \"mutedByList\": {\n            \"key_0\": \"string\"\n          },\n          \"blockedBy\": true,\n          \"blocking\": \"string\",\n          \"blockingByList\": {\n            \"key_0\": \"string\"\n          },\n          \"following\": \"string\",\n          \"followedBy\": \"string\",\n          \"knownFollowers\": {\n            \"key_0\": 5876.594946162603,\n            \"key_1\": 1538.2645825908892\n          }\n        },\n        \"labels\": [\n          {\n            \"src\": \"string\",\n            \"uri\": \"string\",\n            \"val\": \"string\",\n            \"cts\": \"1982-10-13T22:01:45.310Z\",\n            \"ver\": 4171,\n            \"cid\": \"string\",\n            \"neg\": true,\n            \"exp\": \"1951-08-24T19:41:03.756Z\"\n          },\n          {\n            \"src\": \"string\",\n            \"uri\": \"string\",\n            \"val\": \"string\",\n            \"cts\": \"1967-03-23T17:12:37.419Z\",\n            \"ver\": 1133,\n            \"cid\": \"string\",\n            \"neg\": false,\n            \"exp\": \"2000-09-24T10:49:04.719Z\"\n          }\n        ]\n      },\n      \"reason\": \"starterpack-joined\",\n      \"record\": {\n        \"key_0\": 3228\n      },\n      \"isRead\": true,\n      \"indexedAt\": \"2004-09-22T05:47:38.026Z\",\n      \"reasonSubject\": \"string\",\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2024-10-18T16:14:28.628Z\",\n          \"ver\": 4509,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1982-12-12T17:57:00.886Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2019-04-13T23:16:01.843Z\",\n          \"ver\": 5055,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1975-03-11T05:20:31.728Z\"\n        }\n      ]\n    },\n    {\n      \"uri\": \"string\",\n      \"cid\": \"string\",\n      \"author\": {\n        \"did\": \"string\",\n        \"handle\": \"string\",\n        \"displayName\": \"string\",\n        \"description\": \"string\",\n        \"avatar\": \"http://DoF.jsey9gXGH66sM\",\n        \"associated\": {\n          \"key_0\": \"string\",\n          \"key_1\": false\n        },\n        \"indexedAt\": \"2021-10-28T20:47:22.833Z\",\n        \"createdAt\": \"1949-11-21T20:13:56.510Z\",\n        \"viewer\": {\n          \"muted\": false,\n          \"mutedByList\": {\n            \"key_0\": true\n          },\n          \"blockedBy\": true,\n          \"blocking\": \"string\",\n          \"blockingByList\": {\n            \"key_0\": 3406.4299980406677\n          },\n          \"following\": \"string\",\n          \"followedBy\": \"string\",\n          \"knownFollowers\": {\n            \"key_0\": 1240,\n            \"key_1\": 1109.9177707220042\n          }\n        },\n        \"labels\": [\n          {\n            \"src\": \"string\",\n            \"uri\": \"string\",\n            \"val\": \"string\",\n            \"cts\": \"1973-04-12T05:13:34.268Z\",\n            \"ver\": 1650,\n            \"cid\": \"string\",\n            \"neg\": true,\n            \"exp\": \"1975-04-24T12:21:57.541Z\"\n          },\n          {\n            \"src\": \"string\",\n            \"uri\": \"string\",\n            \"val\": \"string\",\n            \"cts\": \"1959-07-10T20:36:42.042Z\",\n            \"ver\": 4053,\n            \"cid\": \"string\",\n            \"neg\": true,\n            \"exp\": \"1970-03-09T16:45:12.062Z\"\n          }\n        ]\n      },\n      \"reason\": \"repost\",\n      \"record\": {\n        \"key_0\": 8773.420191766869,\n        \"key_1\": \"string\"\n      },\n      \"isRead\": false,\n      \"indexedAt\": \"1956-02-15T01:58:28.006Z\",\n      \"reasonSubject\": \"string\",\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1978-04-11T05:24:25.527Z\",\n          \"ver\": 1496,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"2014-06-03T14:29:05.827Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1954-01-01T14:31:19.785Z\",\n          \"ver\": 2796,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1984-02-26T22:42:03.973Z\"\n        }\n      ]\n    }\n  ],\n  \"cursor\": \"string\",\n  \"priority\": false,\n  \"seenAt\": \"1955-06-27T12:33:27.461Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6573b019-d8cc-4155-8bab-95c181a795ed",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.notification.listNotifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reasons",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reasons",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seenAt",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c13e953-7d2a-484c-81e3-3cba13ae2abb",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.notification.listNotifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reasons",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "reasons",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seenAt",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "830d0bef-a091-4f9e-9fd1-8ae3d2c67909",
+          "name": "Get Unread Count",
+          "request": {
+            "name": "Get Unread Count",
+            "description": {
+              "content": "Count the number of unread notifications for the requesting account. Requires auth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.notification.getUnreadCount"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "priority",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "seenAt",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "854fb910-c9ef-49e5-9525-90a44ba4713a",
+              "name": "Unread notification count",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.notification.getUnreadCount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "seenAt",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 4863\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "584060c2-c87d-4ff4-b6e7-3e3e41b11b00",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.notification.getUnreadCount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "seenAt",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09b81d0e-1dcb-4d5b-a1ba-8854fc1637ec",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.notification.getUnreadCount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "seenAt",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.api.bsky.app/xrpc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "171724a9-207e-490e-a44e-e9990176545c",
+    "name": "Bluesky Application API (app.bsky) actor notification API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.\n\nContact Support:\n Name: Bluesky",
+      "type": "text/plain"
+    }
+  }
+}

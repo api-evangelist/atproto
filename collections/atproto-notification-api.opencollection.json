@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Application API (app.bsky) actor notification API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "notification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.notification.listNotifications",
+            "params": [
+              {
+                "name": "reasons",
+                "value": "",
+                "type": "query",
+                "description": "Notification reasons to include in response."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "priority",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "seenAt",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Enumerate notifications for the requesting account. Requires auth."
+        },
+        {
+          "info": {
+            "name": "Get Unread Count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.notification.getUnreadCount",
+            "params": [
+              {
+                "name": "priority",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "seenAt",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Count the number of unread notifications for the requesting account. Requires auth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

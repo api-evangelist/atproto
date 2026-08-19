@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Application API (app.bsky) actor server API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "server",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Describe Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.describeServer"
+          },
+          "docs": "Describes the server's account creation requirements and capabilities. Implemented by PDS. No authentication required."
+        },
+        {
+          "info": {
+            "name": "Create Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.createSession",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an authentication session (login)."
+        },
+        {
+          "info": {
+            "name": "Delete Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.deleteSession"
+          },
+          "docs": "Delete the current session (logout)."
+        },
+        {
+          "info": {
+            "name": "Get Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.getSession"
+          },
+          "docs": "Get information about the current auth session."
+        },
+        {
+          "info": {
+            "name": "Refresh Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.refreshSession"
+          },
+          "docs": "Refresh an authentication session using a refresh JWT."
+        },
+        {
+          "info": {
+            "name": "Create Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.createAccount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an account. Implemented by PDS."
+        },
+        {
+          "info": {
+            "name": "Delete Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.deleteAccount",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete an actor's account with a token and password."
+        },
+        {
+          "info": {
+            "name": "Check Account Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/com.atproto.server.checkAccountStatus"
+          },
+          "docs": "Returns the status of an account, especially as pertaining to import or recovery."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

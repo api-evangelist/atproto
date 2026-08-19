@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bluesky Application API (app.bsky) actor API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "actor",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile",
+            "params": [
+              {
+                "name": "actor",
+                "value": "",
+                "type": "query",
+                "description": "Handle or DID of account to fetch profile of."
+              }
+            ]
+          },
+          "docs": "Get detailed profile view of an actor. Does not require auth, but contains relevant metadata with auth."
+        },
+        {
+          "info": {
+            "name": "Get Profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles",
+            "params": [
+              {
+                "name": "actors",
+                "value": "",
+                "type": "query",
+                "description": "List of handles or DIDs to fetch profiles of. Maximum 25."
+              }
+            ]
+          },
+          "docs": "Get detailed profile views of multiple actors."
+        },
+        {
+          "info": {
+            "name": "Search Actors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.searchActors",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string. Syntax, operators, and ranking of results subject to change."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Find actors (profiles) matching search criteria. Does not require auth."
+        },
+        {
+          "info": {
+            "name": "Get Preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getPreferences"
+          },
+          "docs": "Get private preferences attached to the current account."
+        },
+        {
+          "info": {
+            "name": "Put Preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.putPreferences",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the private preferences attached to the account."
+        },
+        {
+          "info": {
+            "name": "Get Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getSuggestions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of suggested actors (tending toward familiarity)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,906 @@
+{
+  "item": [
+    {
+      "id": "4d0661e8-ec0c-4493-a7e2-51e6d5d81160",
+      "name": "actor",
+      "description": {
+        "content": "Actor (user) profile, search, and preference operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "44091849-6003-425e-87b3-7c142c0a7595",
+          "name": "Get Profile",
+          "request": {
+            "name": "Get Profile",
+            "description": {
+              "content": "Get detailed profile view of an actor. Does not require auth, but contains relevant metadata with auth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.actor.getProfile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actor",
+                  "value": "<string>",
+                  "description": "(Required) Handle or DID of account to fetch profile of."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "0d961f41-7bd4-45c2-9561-8ab7954ccc8d",
+              "name": "Profile view",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getProfile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"did\": \"string\",\n  \"handle\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"avatar\": \"https://cKcHyTYsXblPXNsRqUw.equtAs80nMOSOHSe1NEv8uix8hsnEIX\",\n  \"banner\": \"http://DftqIsZQ.oktt9BX7rxruOInzapW\",\n  \"followersCount\": 8595,\n  \"followsCount\": 5069,\n  \"postsCount\": 1923,\n  \"associated\": {\n    \"key_0\": false,\n    \"key_1\": 5139.053920301847,\n    \"key_2\": false\n  },\n  \"indexedAt\": \"1952-05-11T02:49:06.130Z\",\n  \"createdAt\": \"2020-05-30T03:57:15.226Z\",\n  \"viewer\": {\n    \"muted\": true,\n    \"mutedByList\": {\n      \"key_0\": 7202.754663483205\n    },\n    \"blockedBy\": true,\n    \"blocking\": \"string\",\n    \"blockingByList\": {\n      \"key_0\": 4669\n    },\n    \"following\": \"string\",\n    \"followedBy\": \"string\",\n    \"knownFollowers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"labels\": [\n    {\n      \"src\": \"string\",\n      \"uri\": \"string\",\n      \"val\": \"string\",\n      \"cts\": \"1981-06-21T20:53:56.991Z\",\n      \"ver\": 1074,\n      \"cid\": \"string\",\n      \"neg\": true,\n      \"exp\": \"1964-04-14T21:09:23.233Z\"\n    },\n    {\n      \"src\": \"string\",\n      \"uri\": \"string\",\n      \"val\": \"string\",\n      \"cts\": \"1958-10-16T01:29:33.393Z\",\n      \"ver\": 1947,\n      \"cid\": \"string\",\n      \"neg\": true,\n      \"exp\": \"1988-11-09T12:13:21.928Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4a43d4c-918e-41af-98e4-5e19271e07fc",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getProfile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e935666-c256-42d7-9569-51a5237d7c2f",
+          "name": "Get Profiles",
+          "request": {
+            "name": "Get Profiles",
+            "description": {
+              "content": "Get detailed profile views of multiple actors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.actor.getProfiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actors",
+                  "value": "<string>",
+                  "description": "(Required) List of handles or DIDs to fetch profiles of. Maximum 25."
+                },
+                {
+                  "disabled": false,
+                  "key": "actors",
+                  "value": "<string>",
+                  "description": "(Required) List of handles or DIDs to fetch profiles of. Maximum 25."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "a6f76415-a208-4a5f-9cfa-5504124b82ea",
+              "name": "Profile views",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getProfiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actors",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actors",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"profiles\": [\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://yqkSogzydEgUHOvgPz.fqEmndekIE63XIMVy9Mw9xg04GXqBqinaCGtG70Ec+qhH\",\n      \"banner\": \"https://WiRYexKHxOFxOvHaLLXSZsGOHA.vngxmwLAE0.NZTe\",\n      \"followersCount\": 2326,\n      \"followsCount\": 992,\n      \"postsCount\": 5220,\n      \"associated\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": 3533\n      },\n      \"indexedAt\": \"1954-06-15T22:33:28.548Z\",\n      \"createdAt\": \"2020-06-24T16:23:23.299Z\",\n      \"viewer\": {\n        \"muted\": true,\n        \"mutedByList\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"blockedBy\": false,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": false,\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2012-12-27T03:04:51.722Z\",\n          \"ver\": 6283,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1971-12-25T10:20:33.570Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1947-10-28T01:47:32.550Z\",\n          \"ver\": 8025,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"2006-08-09T12:14:34.887Z\"\n        }\n      ]\n    },\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://GEarlfPn.wjplc+huG1OQLofVa5d+zd7hZELJI-rPm0wM5jrWu+M2ITHJUCf1-lcxPSw\",\n      \"banner\": \"http://PwSrHfFAXUiOnAhvHFDtLJnjGliL.wtxKcAcqo8vuwSWGjQKlZS27,-xi7LsHIQwMvrSRo,WtN9a\",\n      \"followersCount\": 3716,\n      \"followsCount\": 7063,\n      \"postsCount\": 2590,\n      \"associated\": {\n        \"key_0\": 31.164790397546493,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": true\n      },\n      \"indexedAt\": \"2007-06-03T05:31:32.880Z\",\n      \"createdAt\": \"1967-06-03T19:52:44.139Z\",\n      \"viewer\": {\n        \"muted\": true,\n        \"mutedByList\": {\n          \"key_0\": 6221.391362148295,\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": true,\n          \"key_1\": 8333\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": true,\n          \"key_1\": false,\n          \"key_2\": \"string\",\n          \"key_3\": 8612.391961240397\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2009-05-22T05:05:36.494Z\",\n          \"ver\": 1042,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1991-12-25T06:21:03.552Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2009-09-27T21:14:09.049Z\",\n          \"ver\": 44,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"2022-07-16T13:02:29.918Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11025995-782c-48d0-8390-7d95e3cd4812",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getProfiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actors",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actors",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "793ad66a-87d6-4585-82a3-cec96d89030d",
+          "name": "Search Actors",
+          "request": {
+            "name": "Search Actors",
+            "description": {
+              "content": "Find actors (profiles) matching search criteria. Does not require auth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.actor.searchActors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query string. Syntax, operators, and ranking of results subject to change."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "3e4c175c-f3a6-4ca9-abbb-807b45b5ab81",
+              "name": "Matching actors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.searchActors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actors\": [\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://itNEQcUypvoeP.ahhzrwyNxpVQf9XuE3JKKGms71ee0Tis6MLVMw3vNMclou3Qjz6lul,QKmHuomGbVCIyEpKhgZ\",\n      \"associated\": {\n        \"key_0\": 6092.363147977086,\n        \"key_1\": false\n      },\n      \"indexedAt\": \"2021-03-06T22:24:18.169Z\",\n      \"createdAt\": \"1977-07-19T23:09:59.032Z\",\n      \"viewer\": {\n        \"muted\": false,\n        \"mutedByList\": {\n          \"key_0\": 7515.187668138543\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": \"string\",\n          \"key_1\": 9640\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2016-04-27T21:25:06.997Z\",\n          \"ver\": 7238,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1979-09-24T01:58:06.840Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1990-08-05T20:13:10.232Z\",\n          \"ver\": 3023,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"2020-12-15T02:23:50.086Z\"\n        }\n      ]\n    },\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"http://EypLAFUzYmTnWXMpUpaotjCLSnyRXS.rkNgpnVPMpphQoQF+3g8Mg,5pb+,vxHJO0DKpVzkw5bM7vKlwowshGT90FLC-CYWvP2gaeAM\",\n      \"associated\": {\n        \"key_0\": 3562\n      },\n      \"indexedAt\": \"1972-07-21T05:40:38.281Z\",\n      \"createdAt\": \"2008-05-10T06:23:49.451Z\",\n      \"viewer\": {\n        \"muted\": true,\n        \"mutedByList\": {\n          \"key_0\": 7852.910165515777\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": 7584.3902401918385,\n          \"key_1\": 5285.969283939194,\n          \"key_2\": 6106.591403244393\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": \"string\"\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1996-04-05T14:34:00.068Z\",\n          \"ver\": 1021,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1959-02-08T01:32:13.777Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2018-11-06T10:00:45.980Z\",\n          \"ver\": 7305,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1970-07-03T07:45:39.014Z\"\n        }\n      ]\n    }\n  ],\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb24ad1a-a06b-4196-841e-f11f53767868",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.searchActors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d5eb84e-25a9-4c1a-8996-e2d45d653595",
+          "name": "Get Preferences",
+          "request": {
+            "name": "Get Preferences",
+            "description": {
+              "content": "Get private preferences attached to the current account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.actor.getPreferences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb71ad02-c670-4817-860c-343203875cb1",
+              "name": "User preferences",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getPreferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"preferences\": [\n    {\n      \"key_0\": true,\n      \"key_1\": 3389.132077260478\n    },\n    {\n      \"key_0\": 3786.499198840789,\n      \"key_1\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "930e5213-5a11-41c2-a081-eee6831e28cf",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getPreferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6359a089-3fca-49d2-9697-49591bd8c884",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getPreferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa297b32-bbca-486f-a82c-326255fe38f7",
+          "name": "Put Preferences",
+          "request": {
+            "name": "Put Preferences",
+            "description": {
+              "content": "Set the private preferences attached to the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.actor.putPreferences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"preferences\": [\n    {\n      \"key_0\": 7293.355986027827,\n      \"key_1\": 3980.4478734214454,\n      \"key_2\": true\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "56dfdda5-e65e-44c4-8700-ea2888bec468",
+              "name": "Preferences updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.putPreferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferences\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "882dd7f3-f832-4ab6-a6c5-ba4c57145099",
+              "name": "Bad request or validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.putPreferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferences\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "153600eb-605f-4826-8d17-6742c4bb8ade",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.putPreferences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferences\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6468d97-96c8-4287-8f68-0283b7b94124",
+          "name": "Get Suggestions",
+          "request": {
+            "name": "Get Suggestions",
+            "description": {
+              "content": "Get a list of suggested actors (tending toward familiarity).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "app.bsky.actor.getSuggestions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "b811ef8a-6bc8-4f58-a3bf-91ae9b9a2784",
+              "name": "Suggested actors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "app.bsky.actor.getSuggestions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actors\": [\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://eQ.ygy4f\",\n      \"associated\": {\n        \"key_0\": \"string\",\n        \"key_1\": false\n      },\n      \"indexedAt\": \"2010-06-11T09:31:18.006Z\",\n      \"createdAt\": \"1969-07-11T13:29:42.934Z\",\n      \"viewer\": {\n        \"muted\": true,\n        \"mutedByList\": {\n          \"key_0\": \"string\",\n          \"key_1\": 7805\n        },\n        \"blockedBy\": true,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": \"string\",\n          \"key_1\": false\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": \"string\",\n          \"key_1\": 6323\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1973-08-21T05:16:10.382Z\",\n          \"ver\": 7924,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1952-10-11T16:06:40.510Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1984-06-15T23:13:30.701Z\",\n          \"ver\": 2153,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"1995-02-16T14:20:50.963Z\"\n        }\n      ]\n    },\n    {\n      \"did\": \"string\",\n      \"handle\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"avatar\": \"https://sMtzXPIfXYUQSOJwldPSZvEM.oixpyB-qkMAj.5umBmxXgVtOK8OSZ8PftSOw\",\n      \"associated\": {\n        \"key_0\": 2494.666674779511,\n        \"key_1\": false\n      },\n      \"indexedAt\": \"1982-06-26T18:25:16.829Z\",\n      \"createdAt\": \"2001-10-03T21:45:15.632Z\",\n      \"viewer\": {\n        \"muted\": false,\n        \"mutedByList\": {\n          \"key_0\": \"string\",\n          \"key_1\": 8845.415921448799,\n          \"key_2\": false\n        },\n        \"blockedBy\": false,\n        \"blocking\": \"string\",\n        \"blockingByList\": {\n          \"key_0\": 6088,\n          \"key_1\": 5562\n        },\n        \"following\": \"string\",\n        \"followedBy\": \"string\",\n        \"knownFollowers\": {\n          \"key_0\": 4239,\n          \"key_1\": \"string\",\n          \"key_2\": false,\n          \"key_3\": \"string\"\n        }\n      },\n      \"labels\": [\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"1978-01-13T19:31:09.195Z\",\n          \"ver\": 6893,\n          \"cid\": \"string\",\n          \"neg\": true,\n          \"exp\": \"1969-03-12T17:20:07.829Z\"\n        },\n        {\n          \"src\": \"string\",\n          \"uri\": \"string\",\n          \"val\": \"string\",\n          \"cts\": \"2022-04-23T13:24:47.871Z\",\n          \"ver\": 1133,\n          \"cid\": \"string\",\n          \"neg\": false,\n          \"exp\": \"2026-03-23T18:51:50.296Z\"\n        }\n      ]\n    }\n  ],\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://public.api.bsky.app/xrpc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ba2d1a43-8d77-4b14-accf-662c2f58d037",
+    "name": "Bluesky Application API (app.bsky) actor API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.\n\nContact Support:\n Name: Bluesky",
+      "type": "text/plain"
+    }
+  }
+}
