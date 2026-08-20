@@ -32,6 +32,16 @@ tags:
   - Social Networking
   - Decentralized
   - Federated
+  - Open-Source
+  - Bluesky
+  - Fediverse
+  - Identity
+  - XRPC
+  - Lexicon
+tags_raw:
+  - Social Networking
+  - Decentralized
+  - Federated
   - Open Source
   - Bluesky
   - Fediverse
@@ -56,6 +66,12 @@ apis:
   - Firehose
   - WebSocket
   - Real-Time
+  - Event
+  - Streaming
+  tags_raw:
+  - Firehose
+  - WebSocket
+  - Real-Time
   - Events
   - Streaming
   properties:
@@ -67,6 +83,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Actor
+  tags_raw:
   - actor
   properties:
   - type: OpenAPI
@@ -85,6 +103,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Feed
+  tags_raw:
   - feed
   properties:
   - type: OpenAPI
@@ -103,6 +123,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Graph
+  tags_raw:
   - graph
   properties:
   - type: OpenAPI
@@ -121,6 +143,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Identity
+  tags_raw:
   - identity
   properties:
   - type: OpenAPI
@@ -139,6 +163,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Notification
+  tags_raw:
   - notification
   properties:
   - type: OpenAPI
@@ -157,6 +183,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Repo
+  tags_raw:
   - repo
   properties:
   - type: OpenAPI
@@ -175,6 +203,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Server
+  tags_raw:
   - server
   properties:
   - type: OpenAPI
@@ -193,6 +223,8 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
+  - Sync
+  tags_raw:
   - sync
   properties:
   - type: OpenAPI
