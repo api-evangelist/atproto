@@ -1,19 +1,25 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Bluesky Application API (app.bsky) actor server API
-  description: The Bluesky application-layer Lexicon API providing feed, actor, graph, notification, and video endpoints for the microblogging application built on AT Protocol. The AppView is accessible unauthenticated at public.api.bsky.app for read operations, and at api.bsky.app for authenticated write operations. Schemas are defined using Lexicon, AT Protocol's schema definition language.
+  title: AT Protocol Core API (com.atproto) Server API
+  description: The core AT Protocol XRPC API covering server identity, repository management, account administration, moderation/labeling, and data synchronization. Endpoints are accessed via HTTP GET (queries) and POST (procedures) at /xrpc/{NSID} on any PDS host or the Bluesky-hosted services at bsky.social and bsky.network. Schemas are defined using Lexicon, AT Protocol's schema definition language.
   version: 1.0.0
   contact:
-    name: Bluesky
-    url: https://docs.bsky.app/
+    name: AT Protocol
+    url: https://atproto.com/
   license:
     name: MIT / Apache-2.0
     url: https://github.com/bluesky-social/atproto/blob/main/LICENSE.txt
 servers:
-- url: https://public.api.bsky.app/xrpc
-  description: Public AppView (unauthenticated read operations)
-- url: https://api.bsky.app/xrpc
-  description: Authenticated AppView (write operations)
+- url: https://bsky.social/xrpc
+  description: Bluesky PDS (Personal Data Server)
+- url: https://bsky.network/xrpc
+  description: Bluesky Relay / BGS
+- url: https://{pds_host}/xrpc
+  description: Self-hosted PDS
+  variables:
+    pds_host:
+      default: bsky.social
+      description: Hostname of the Personal Data Server
 security:
 - bearerAuth: []
 - {}
@@ -192,6 +198,29 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    SessionInfo:
+      type: object
+      required:
+      - handle
+      - did
+      properties:
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+        email:
+          type: string
+        emailConfirmed:
+          type: boolean
+        emailAuthFactor:
+          type: boolean
+        active:
+          type: boolean
+        status:
+          type: string
     CreateAccountInput:
       type: object
       required:
@@ -217,73 +246,6 @@ components:
         recoveryKey:
           type: string
           description: DID PLC rotation key (recovery key)
-    CreateAccountOutput:
-      type: object
-      required:
-      - accessJwt
-      - refreshJwt
-      - handle
-      - did
-      properties:
-        accessJwt:
-          type: string
-        refreshJwt:
-          type: string
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
-    CreateSessionInput:
-      type: object
-      required:
-      - identifier
-      - password
-      properties:
-        identifier:
-          type: string
-          description: Handle or other identifier supported by the server
-        password:
-          type: string
-        authFactorToken:
-          type: string
-          description: Two-factor authentication token
-        allowTakendown:
-          type: boolean
-          description: When true, return a narrow-scoped token for takendown accounts
-    AccountStatus:
-      type: object
-      required:
-      - activated
-      - validDid
-      - repoCommit
-      - repoRev
-      - repoBlocks
-      - indexedRecords
-      - privateStateValues
-      - expectedBlobs
-      - importedBlobs
-      properties:
-        activated:
-          type: boolean
-        validDid:
-          type: boolean
-        repoCommit:
-          type: string
-        repoRev:
-          type: string
-        repoBlocks:
-          type: integer
-        indexedRecords:
-          type: integer
-        privateStateValues:
-          type: integer
-        expectedBlobs:
-          type: integer
-        importedBlobs:
-          type: integer
     Session:
       type: object
       required:
@@ -324,41 +286,6 @@ components:
           - takendown
           - suspended
           - deactivated
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
-    SessionInfo:
-      type: object
-      required:
-      - handle
-      - did
-      properties:
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
-        email:
-          type: string
-        emailConfirmed:
-          type: boolean
-        emailAuthFactor:
-          type: boolean
-        active:
-          type: boolean
-        status:
-          type: string
     ServerDescription:
       type: object
       required:
@@ -393,6 +320,85 @@ components:
         did:
           type: string
           description: DID of the server
+    AccountStatus:
+      type: object
+      required:
+      - activated
+      - validDid
+      - repoCommit
+      - repoRev
+      - repoBlocks
+      - indexedRecords
+      - privateStateValues
+      - expectedBlobs
+      - importedBlobs
+      properties:
+        activated:
+          type: boolean
+        validDid:
+          type: boolean
+        repoCommit:
+          type: string
+        repoRev:
+          type: string
+        repoBlocks:
+          type: integer
+        indexedRecords:
+          type: integer
+        privateStateValues:
+          type: integer
+        expectedBlobs:
+          type: integer
+        importedBlobs:
+          type: integer
+    CreateAccountOutput:
+      type: object
+      required:
+      - accessJwt
+      - refreshJwt
+      - handle
+      - did
+      properties:
+        accessJwt:
+          type: string
+        refreshJwt:
+          type: string
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    CreateSessionInput:
+      type: object
+      required:
+      - identifier
+      - password
+      properties:
+        identifier:
+          type: string
+          description: Handle or other identifier supported by the server
+        password:
+          type: string
+        authFactorToken:
+          type: string
+          description: Two-factor authentication token
+        allowTakendown:
+          type: boolean
+          description: When true, return a narrow-scoped token for takendown accounts
   responses:
     Unauthorized:
       description: Authentication required
@@ -411,7 +417,12 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Access JWT obtained from com.atproto.server.createSession
+      description: Access JWT obtained from createSession or refreshSession
+    refreshAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Refresh JWT obtained from createSession
 externalDocs:
-  description: Bluesky HTTP API Reference
-  url: https://docs.bsky.app/docs/advanced-guides/atproto
+  description: AT Protocol XRPC Specification
+  url: https://atproto.com/specs/xrpc

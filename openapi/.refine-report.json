@@ -1,21 +1,15 @@
 {
   "provider": "atproto",
   "sources": [
-    "atproto-actor-api-openapi.yml",
-    "atproto-feed-api-openapi.yml",
-    "atproto-graph-api-openapi.yml",
-    "atproto-identity-api-openapi.yml",
-    "atproto-notification-api-openapi.yml",
-    "atproto-repo-api-openapi.yml",
-    "atproto-server-api-openapi.yml",
-    "atproto-sync-api-openapi.yml"
+    "_original/atproto-app-bsky-openapi.yml",
+    "_original/atproto-com-atproto-openapi.yml"
   ],
   "outputs": [
     "atproto-actor-api-openapi.yml",
     "atproto-feed-api-openapi.yml",
     "atproto-graph-api-openapi.yml",
-    "atproto-identity-api-openapi.yml",
     "atproto-notification-api-openapi.yml",
+    "atproto-identity-api-openapi.yml",
     "atproto-repo-api-openapi.yml",
     "atproto-server-api-openapi.yml",
     "atproto-sync-api-openapi.yml"
@@ -23,6 +17,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "atproto-app-bsky-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "atproto-com-atproto-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "atproto-actor-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-feed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-graph-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-identity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-notification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-repo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-server-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "atproto-sync-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
