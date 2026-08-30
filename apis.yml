@@ -95,7 +95,7 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
-  - Actor
+  - actor
   tags_raw:
   - actor
   properties:
@@ -115,7 +115,7 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
-  - Feed
+  - feed
   tags_raw:
   - feed
   properties:
@@ -195,7 +195,7 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
-  - Repo
+  - repo
   tags_raw:
   - repo
   properties:
