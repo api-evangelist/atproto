@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: atproto
-  schema_version: 0.18.2
-  scored_at: '2026-09-04'
-  run_ts: 2026-09-04T062714
+  schema_version: 0.21.0
+  scored_at: '2026-09-12'
+  run_ts: 2026-09-12T080032
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.18.2.yml; counts below let you verify that.
+    in rubric/scoring-0.21.0.yml; counts below let you verify that.
   counts:
-    total: 132
-    earned: 41
+    total: 136
+    earned: 44
     partial: 7
-    missed: 58
+    missed: 59
     na: 26
   checks:
   - id: multiple_apis
@@ -32,8 +32,6 @@ kin_checks:
   - id: webhooks_or_callbacks
     status: missed
     detail: 0 of 8 openapi documents pass
-  - id: asyncapi_present
-    status: missed
   - id: json_schema_present
     status: missed
   - id: json_schema_per_resource
@@ -63,8 +61,6 @@ kin_checks:
   - id: examples_published
     status: missed
   - id: portal_present
-    status: missed
-  - id: api_reference_present
     status: missed
   - id: getting_started_present
     status: missed
@@ -102,6 +98,14 @@ kin_checks:
     status: missed
   - id: reg_compliance_published
     status: missed
+  - id: upsert_outcome_discriminator
+    status: missed
+  - id: upsert_alternate_key
+    status: missed
+  - id: upsert_named
+    status: missed
+  - id: upsert_declared_conflict
+    status: missed
   - id: reversibility_documented
     status: missed
   - id: mcp_server
@@ -111,8 +115,6 @@ kin_checks:
   - id: error_semantics
     status: missed
   - id: openapi_examples
-    status: missed
-  - id: event_surface_described
     status: missed
   - id: agent_skills
     status: missed

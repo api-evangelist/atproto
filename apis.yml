@@ -1,18 +1,6 @@
----
 aid: atproto
 name: AT Protocol
-description: >-
-  AT Protocol (Authenticated Transfer Protocol) is an open, federated social
-  networking protocol developed by Bluesky Social PBC that powers the Bluesky
-  social network and its 40M+ users. The protocol defines a public HTTP API
-  surface via XRPC (cross-resolver protocol calls) organized under Lexicon
-  schemas that cover identity (DIDs and handles), repository management,
-  feed generation, labeling, and moderation. Developers can tap into a public
-  firehose WebSocket event stream without API keys, and write operations use
-  OAuth 2.0 or JWT bearer tokens for authentication. All data is stored in
-  user-owned signed repositories and is 100% publicly accessible, making the
-  protocol suitable for building social apps, feed generators, labelers, and
-  bots.
+description: AT Protocol (Authenticated Transfer Protocol) is an open, federated social networking protocol developed by Bluesky Social PBC that powers the Bluesky social network and its 40M+ users. The protocol defines a public HTTP API surface via XRPC (cross-resolver protocol calls) organized under Lexicon schemas that cover identity (DIDs and handles), repository management, feed generation, labeling, and moderation. Developers can tap into a public firehose WebSocket event stream without API keys, and write operations use OAuth 2.0 or JWT bearer tokens for authentication. All data is stored in user-owned signed repositories and is 100% publicly accessible, making the protocol suitable for building social apps, feed generators, labelers, and bots.
 type: Index
 deliveryModel:
   model: saas
@@ -41,37 +29,33 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/atproto.png
 tags:
-  - Social Networking
-  - Decentralized
-  - Federated
-  - Open-Source
-  - Bluesky
-  - Fediverse
-  - Identity
-  - XRPC
-  - Lexicon
+- Social Networking
+- Decentralized
+- Federated
+- Open-Source
+- Bluesky
+- Fediverse
+- Identity
+- XRPC
+- Lexicon
 tags_raw:
-  - Social Networking
-  - Decentralized
-  - Federated
-  - Open Source
-  - Bluesky
-  - Fediverse
-  - Identity
-  - XRPC
-  - Lexicon
+- Social Networking
+- Decentralized
+- Federated
+- Open Source
+- Bluesky
+- Fediverse
+- Identity
+- XRPC
+- Lexicon
 url: https://raw.githubusercontent.com/api-evangelist/atproto/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
-
 specificationVersion: '0.23'
 apis:
 - aid: atproto:firehose
   name: AT Protocol Firehose (Event Stream)
-  description: >-
-    Public WebSocket event stream providing real-time access to all public activity on the AT Protocol
-    network, including posts, likes, follows, and other repository events. No API key is required to subscribe.
-    Useful for building feed generators, search engines, bots, and analytics tools.
+  description: Public WebSocket event stream providing real-time access to all public activity on the AT Protocol network, including posts, likes, follows, and other repository events. No API key is required to subscribe. Useful for building feed generators, search engines, bots, and analytics tools.
   humanURL: https://atproto.com/specs/event-stream
   baseURL: wss://jetstream1.us-east.bsky.network/subscribe
   tags:
@@ -249,37 +233,220 @@ apis:
     url: https://docs.bsky.app/docs/advanced-guides/atproto
   - type: Documentation
     url: https://endpoints.bsky.app/
-common:
-  - type: AgenticAccess
-    url: agentic-access/atproto-agentic-access.yml
-  - type: DomainSecurity
-    url: security/atproto-domain-security.yml
-  - type: Authentication
-    url: authentication/atproto-authentication.yml
-  - type: Website
-    url: https://atproto.com/
+- aid: atproto:atproto-xrpc
+  name: AT Protocol XRPC API
+  description: 'XRPC is the AT Protocol''s HTTP-based remote procedure call layer. All
+
+    protocol interactions — querying records, writing records, subscribing
+
+    to streams, resolving identity, moderating content — are exposed as
+
+    XRPC methods defined in Lexicon schemas. PDS, Relay, and AppView
+
+    services all speak XRPC, so the same client library can be pointed at
+
+    different network roles. The HTTP surface uses /xrpc/{nsid} paths and
+
+    JSON request/response bodies (with optional CBOR for record content).
+
+    '
+  humanURL: https://atproto.com/specs/xrpc
+  baseURL: https://atproto.com/xrpc
+  tags:
+  - XRPC
+  - RPC
+  - HTTP
+  - JSON
+  - Protocol Surface
+  properties:
+  - type: Specification
+    url: https://atproto.com/specs/xrpc
   - type: Documentation
-    url: https://atproto.com/guides/overview
-  - type: Blog
-    url: https://atproto.com/blog
+    url: https://atproto.com/guides/glossary
   - type: GitHubOrganization
     url: https://github.com/bluesky-social
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/bluesky-pbc
-  - type: X
-    url: https://twitter.com/at_protocol
-  - type: StatusPage
-    url: https://status.bsky.app/
-  - type: SDKs
-    url: https://github.com/bluesky-social/atproto/tree/main/packages
-  - type: SDKs
+- aid: atproto:lexicon
+  name: AT Protocol Lexicon Schemas
+  description: 'Lexicon is the schema definition language for AT Protocol. Every
+
+    record type, XRPC method, and event subscription on the network is
+
+    described by a Lexicon document, which acts as both contract and code
+
+    generation source for client libraries. Bluesky publishes the
+
+    app.bsky.* and com.atproto.* lexicons that power the reference
+
+    Bluesky application; third parties define their own NSIDs to ship
+
+    independent applications on the same network.
+
+    '
+  humanURL: https://atproto.com/guides/lexicon
+  baseURL: https://atproto.com/lexicons
+  tags:
+  - Lexicon
+  - Schema
+  - NSID
+  - Record Types
+  properties:
+  - type: Documentation
+    url: https://atproto.com/guides/lexicon
+  - type: Specification
+    url: https://atproto.com/specs/lexicon
+  - type: Repository
+    url: https://github.com/bluesky-social/atproto/tree/main/lexicons
+- aid: atproto:pds-api
+  name: Personal Data Server (PDS) API
+  description: 'The PDS hosts a user''s repository of signed records and exposes the
+
+    com.atproto.* XRPC methods for account creation, authentication,
+
+    record CRUD, blob upload, and repository sync. A PDS is the home
+
+    server for an actor; users can migrate their account (and full
+
+    record history) between PDS hosts while keeping the same DID.
+
+    '
+  humanURL: https://atproto.com/guides/self-hosting
+  baseURL: https://atproto.com/xrpc/com.atproto
+  tags:
+  - PDS
+  - Personal Data Server
+  - Repository
+  - Sync
+  - Self-Hosting
+  properties:
+  - type: Documentation
+    url: https://atproto.com/guides/self-hosting
+  - type: Specification
+    url: https://atproto.com/specs/repository
+  - type: Reference
+    url: https://github.com/bluesky-social/atproto/tree/main/packages/pds
+- aid: atproto:relay-firehose
+  name: AT Protocol Relay & Firehose
+  description: 'The Relay aggregates the com.atproto.sync.subscribeRepos firehose
+
+    across PDS hosts and re-broadcasts the combined event stream over
+
+    WebSocket. AppViews and indexers subscribe to a Relay to get a
+
+    near-real-time view of every public record written on the network
+
+    without polling individual PDS instances.
+
+    '
+  humanURL: https://atproto.com/guides/glossary
+  baseURL: wss://bsky.network
+  tags:
+  - Relay
+  - Firehose
+  - WebSocket
+  - Streaming
+  - Sync
+  properties:
+  - type: Specification
+    url: https://atproto.com/specs/sync
+  - type: Reference
     url: https://github.com/bluesky-social/indigo
-  - type: Plans
-    url: plans/atproto-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/atproto-rate-limits.yml
-  - type: FinOps
-    url: finops/atproto-finops.yml
+  - type: AsyncAPI
+    url: https://raw.githubusercontent.com/api-evangelist/at-protocol/refs/heads/main/asyncapi/at-protocol-asyncapi.yml
+- aid: atproto:bsky-appview
+  name: Bluesky AppView API
+  description: 'The Bluesky AppView indexes the firehose and exposes the app.bsky.*
+
+    XRPC methods that the Bluesky client (and any compatible client)
+
+    uses to render timelines, threads, profiles, notifications, search,
+
+    and graph data. It is the reference AppView for the app.bsky lexicon
+
+    family and the primary read API for Bluesky applications.
+
+    '
+  humanURL: https://docs.bsky.app/
+  baseURL: https://public.api.bsky.app/xrpc
+  tags:
+  - AppView
+  - Bluesky
+  - Timelines
+  - Feed
+  - Graph
+  - Notification
+  tags_raw:
+  - AppView
+  - Bluesky
+  - Timeline
+  - Feed
+  - Graph
+  - Notifications
+  properties:
+  - type: Documentation
+    url: https://docs.bsky.app/
+  - type: APIReference
+    url: https://docs.bsky.app/docs/category/http-reference
+  - type: Lexicons
+    url: https://github.com/bluesky-social/atproto/tree/main/lexicons/app/bsky
+- aid: atproto:identity-did
+  name: AT Protocol Identity (DID & Handles)
+  description: 'Identity in AT Protocol is anchored in DIDs (did:plc or did:web),
+
+    with human-readable handles resolved through DNS TXT records or
+
+    well-known HTTP endpoints. The protocol specifies how DIDs map to
+
+    PDS endpoints, signing keys, and rotation, allowing users to keep
+
+    a stable identity while changing handles or migrating providers.
+
+    '
+  humanURL: https://atproto.com/specs/did
+  baseURL: https://plc.directory
+  tags:
+  - Identity
+  - DID
+  - did:plc
+  - Handles
+  - DNS
+  properties:
+  - type: Specification
+    url: https://atproto.com/specs/did
+  - type: Specification
+    url: https://atproto.com/specs/handle
+  - type: Services
+    url: https://plc.directory/
+common:
+- type: AgenticAccess
+  url: agentic-access/atproto-agentic-access.yml
+- type: DomainSecurity
+  url: security/atproto-domain-security.yml
+- type: Authentication
+  url: authentication/atproto-authentication.yml
+- type: Website
+  url: https://atproto.com/
+- type: Documentation
+  url: https://atproto.com/guides/overview
+- type: Blog
+  url: https://atproto.com/blog
+- type: GitHubOrganization
+  url: https://github.com/bluesky-social
+- type: LinkedIn
+  url: https://www.linkedin.com/company/bluesky-pbc
+- type: X
+  url: https://twitter.com/at_protocol
+- type: StatusPage
+  url: https://status.bsky.app/
+- type: SDKs
+  url: https://github.com/bluesky-social/atproto/tree/main/packages
+- type: SDKs
+  url: https://github.com/bluesky-social/indigo
+- type: Plans
+  url: plans/atproto-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/atproto-rate-limits.yml
+- type: FinOps
+  url: finops/atproto-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
