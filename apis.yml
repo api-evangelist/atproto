@@ -199,7 +199,7 @@ apis:
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
   tags:
-  - Server
+  - Servers
   tags_raw:
   - server
   properties:
