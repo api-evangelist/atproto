@@ -24,7 +24,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: identity
+- name: Identity
   description: DID and handle resolution, identity management
 paths:
   /com.atproto.identity.resolveHandle:
@@ -33,7 +33,7 @@ paths:
       summary: Resolve Handle
       description: Resolves a handle (eg, username) to a DID.
       tags:
-      - identity
+      - Identity
       security:
       - {}
       parameters:
@@ -64,7 +64,7 @@ paths:
       summary: Update Handle
       description: Updates the current account's handle.
       tags:
-      - identity
+      - Identity
       requestBody:
         required: true
         content:
@@ -90,7 +90,7 @@ paths:
       summary: Resolve DID
       description: Resolves a DID to a DID document.
       tags:
-      - identity
+      - Identity
       security:
       - {}
       parameters:
@@ -111,19 +111,6 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request or validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -137,6 +124,19 @@ components:
         message:
           type: string
           description: Human-readable error message
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

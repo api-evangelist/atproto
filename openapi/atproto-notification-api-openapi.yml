@@ -18,7 +18,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: notification
+- name: Notification
   description: Notification management
 paths:
   /app.bsky.notification.listNotifications:
@@ -27,7 +27,7 @@ paths:
       summary: List Notifications
       description: Enumerate notifications for the requesting account. Requires auth.
       tags:
-      - notification
+      - Notification
       parameters:
       - name: reasons
         in: query
@@ -94,7 +94,7 @@ paths:
       summary: Get Unread Count
       description: Count the number of unread notifications for the requesting account. Requires auth.
       tags:
-      - notification
+      - Notification
       parameters:
       - name: priority
         in: query
@@ -157,32 +157,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
-    ViewerState:
-      type: object
-      description: Metadata about the relationship between the requesting account and the subject account.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          type: object
-          additionalProperties: true
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          description: AT-URI of the blocking record, if present
-        blockingByList:
-          type: object
-          additionalProperties: true
-        following:
-          type: string
-          description: AT-URI of the follow record, if present
-        followedBy:
-          type: string
-          description: AT-URI of the follow record from the subject to the requester
-        knownFollowers:
-          type: object
-          additionalProperties: true
     Notification:
       type: object
       required:
@@ -227,16 +201,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     Label:
       type: object
       required:
@@ -271,6 +235,42 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ViewerState:
+      type: object
+      description: Metadata about the relationship between the requesting account and the subject account.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
+          type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Authentication required

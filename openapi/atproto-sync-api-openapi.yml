@@ -24,7 +24,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: sync
+- name: Sync
   description: Data synchronization, firehose, blob access
 paths:
   /com.atproto.sync.getRepo:
@@ -33,7 +33,7 @@ paths:
       summary: Get Repo
       description: Download a repository export as CAR file. Optionally only a subset of commits. Does not require auth; implemented by PDS.
       tags:
-      - sync
+      - Sync
       security:
       - {}
       parameters:
@@ -65,7 +65,7 @@ paths:
       summary: Get Blob
       description: Get a blob associated with a given account. Does not require auth.
       tags:
-      - sync
+      - Sync
       security:
       - {}
       parameters:
@@ -97,7 +97,7 @@ paths:
       summary: List Repos
       description: Enumerates all the DID, rev, and CID triples for all repos hosted by this service.
       tags:
-      - sync
+      - Sync
       security:
       - {}
       parameters:
@@ -134,6 +134,18 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
     RepoRef:
       type: object
       required:
@@ -151,18 +163,6 @@ components:
           type: boolean
         status:
           type: string
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
   responses:
     BadRequest:
       description: Bad request or validation error

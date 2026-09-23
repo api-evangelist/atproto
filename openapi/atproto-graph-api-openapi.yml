@@ -18,7 +18,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: graph
+- name: Graph
   description: Graph operations — follows, blocks, lists, and mutes
 paths:
   /app.bsky.graph.getFollowers:
@@ -27,7 +27,7 @@ paths:
       summary: Get Followers
       description: Enumerates accounts which follow a specified account (actor).
       tags:
-      - graph
+      - Graph
       security:
       - {}
       - bearerAuth: []
@@ -78,7 +78,7 @@ paths:
       summary: Get Follows
       description: Enumerates accounts which a specified account (actor) follows.
       tags:
-      - graph
+      - Graph
       security:
       - {}
       - bearerAuth: []
@@ -157,42 +157,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
-    ViewerState:
-      type: object
-      description: Metadata about the relationship between the requesting account and the subject account.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          type: object
-          additionalProperties: true
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          description: AT-URI of the blocking record, if present
-        blockingByList:
-          type: object
-          additionalProperties: true
-        following:
-          type: string
-          description: AT-URI of the follow record, if present
-        followedBy:
-          type: string
-          description: AT-URI of the follow record from the subject to the requester
-        knownFollowers:
-          type: object
-          additionalProperties: true
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     Label:
       type: object
       required:
@@ -227,6 +191,42 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ViewerState:
+      type: object
+      description: Metadata about the relationship between the requesting account and the subject account.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
+          type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
   responses:
     BadRequest:
       description: Bad request or validation error

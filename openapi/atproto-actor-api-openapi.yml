@@ -18,7 +18,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: actor
+- name: Actor
   description: Actor (user) profile, search, and preference operations
 paths:
   /app.bsky.actor.getProfile:
@@ -27,7 +27,7 @@ paths:
       summary: Get Profile
       description: Get detailed profile view of an actor. Does not require auth, but contains relevant metadata with auth.
       tags:
-      - actor
+      - Actor
       security:
       - {}
       - bearerAuth: []
@@ -53,7 +53,7 @@ paths:
       summary: Get Profiles
       description: Get detailed profile views of multiple actors.
       tags:
-      - actor
+      - Actor
       security:
       - {}
       - bearerAuth: []
@@ -91,7 +91,7 @@ paths:
       summary: Search Actors
       description: Find actors (profiles) matching search criteria. Does not require auth.
       tags:
-      - actor
+      - Actor
       security:
       - {}
       - bearerAuth: []
@@ -139,7 +139,7 @@ paths:
       summary: Get Preferences
       description: Get private preferences attached to the current account.
       tags:
-      - actor
+      - Actor
       responses:
         '200':
           description: User preferences
@@ -165,7 +165,7 @@ paths:
       summary: Put Preferences
       description: Set the private preferences attached to the account.
       tags:
-      - actor
+      - Actor
       requestBody:
         required: true
         content:
@@ -193,7 +193,7 @@ paths:
       summary: Get Suggestions
       description: Get a list of suggested actors (tending toward familiarity).
       tags:
-      - actor
+      - Actor
       security:
       - {}
       - bearerAuth: []
@@ -261,42 +261,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
-    ViewerState:
-      type: object
-      description: Metadata about the relationship between the requesting account and the subject account.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          type: object
-          additionalProperties: true
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          description: AT-URI of the blocking record, if present
-        blockingByList:
-          type: object
-          additionalProperties: true
-        following:
-          type: string
-          description: AT-URI of the follow record, if present
-        followedBy:
-          type: string
-          description: AT-URI of the follow record from the subject to the requester
-        knownFollowers:
-          type: object
-          additionalProperties: true
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     Label:
       type: object
       required:
@@ -331,6 +295,16 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
     ProfileViewDetailed:
       type: object
       required:
@@ -377,6 +351,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
+    ViewerState:
+      type: object
+      description: Metadata about the relationship between the requesting account and the subject account.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
+          type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
   responses:
     Unauthorized:
       description: Authentication required

@@ -24,7 +24,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: server
+- name: Server
   description: Server management, session creation, account administration
 paths:
   /com.atproto.server.describeServer:
@@ -33,7 +33,7 @@ paths:
       summary: Describe Server
       description: Describes the server's account creation requirements and capabilities. Implemented by PDS. No authentication required.
       tags:
-      - server
+      - Server
       security:
       - {}
       responses:
@@ -51,7 +51,7 @@ paths:
       summary: Create Session
       description: Create an authentication session (login).
       tags:
-      - server
+      - Server
       security:
       - {}
       requestBody:
@@ -77,7 +77,7 @@ paths:
       summary: Delete Session
       description: Delete the current session (logout).
       tags:
-      - server
+      - Server
       responses:
         '200':
           description: Session deleted
@@ -91,7 +91,7 @@ paths:
       summary: Get Session
       description: Get information about the current auth session.
       tags:
-      - server
+      - Server
       responses:
         '200':
           description: Current session info
@@ -109,7 +109,7 @@ paths:
       summary: Refresh Session
       description: Refresh an authentication session using a refresh JWT.
       tags:
-      - server
+      - Server
       security:
       - refreshAuth: []
       responses:
@@ -129,7 +129,7 @@ paths:
       summary: Create Account
       description: Create an account. Implemented by PDS.
       tags:
-      - server
+      - Server
       security:
       - {}
       requestBody:
@@ -153,7 +153,7 @@ paths:
       summary: Delete Account
       description: Delete an actor's account with a token and password.
       tags:
-      - server
+      - Server
       requestBody:
         required: true
         content:
@@ -186,7 +186,7 @@ paths:
       summary: Check Account Status
       description: Returns the status of an account, especially as pertaining to import or recovery.
       tags:
-      - server
+      - Server
       responses:
         '200':
           description: Account status
@@ -198,12 +198,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    SessionInfo:
+    CreateAccountOutput:
       type: object
       required:
+      - accessJwt
+      - refreshJwt
       - handle
       - did
       properties:
+        accessJwt:
+          type: string
+        refreshJwt:
+          type: string
         handle:
           type: string
         did:
@@ -211,41 +217,23 @@ components:
         didDoc:
           type: object
           additionalProperties: true
-        email:
-          type: string
-        emailConfirmed:
-          type: boolean
-        emailAuthFactor:
-          type: boolean
-        active:
-          type: boolean
-        status:
-          type: string
-    CreateAccountInput:
+    CreateSessionInput:
       type: object
       required:
-      - handle
+      - identifier
+      - password
       properties:
-        email:
+        identifier:
           type: string
-        handle:
-          type: string
-          description: Requested handle for the account
-        did:
-          type: string
-          description: Pre-existing atproto DID, being imported to a new account
-        inviteCode:
-          type: string
-        verificationCode:
-          type: string
-        verificationPhone:
-          type: string
+          description: Handle or other identifier supported by the server
         password:
           type: string
-          description: Initial account password
-        recoveryKey:
+        authFactorToken:
           type: string
-          description: DID PLC rotation key (recovery key)
+          description: Two-factor authentication token
+        allowTakendown:
+          type: boolean
+          description: When true, return a narrow-scoped token for takendown accounts
     Session:
       type: object
       required:
@@ -320,6 +308,43 @@ components:
         did:
           type: string
           description: DID of the server
+    CreateAccountInput:
+      type: object
+      required:
+      - handle
+      properties:
+        email:
+          type: string
+        handle:
+          type: string
+          description: Requested handle for the account
+        did:
+          type: string
+          description: Pre-existing atproto DID, being imported to a new account
+        inviteCode:
+          type: string
+        verificationCode:
+          type: string
+        verificationPhone:
+          type: string
+        password:
+          type: string
+          description: Initial account password
+        recoveryKey:
+          type: string
+          description: DID PLC rotation key (recovery key)
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
     AccountStatus:
       type: object
       required:
@@ -351,18 +376,12 @@ components:
           type: integer
         importedBlobs:
           type: integer
-    CreateAccountOutput:
+    SessionInfo:
       type: object
       required:
-      - accessJwt
-      - refreshJwt
       - handle
       - did
       properties:
-        accessJwt:
-          type: string
-        refreshJwt:
-          type: string
         handle:
           type: string
         did:
@@ -370,35 +389,16 @@ components:
         didDoc:
           type: object
           additionalProperties: true
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
+        email:
           type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
-    CreateSessionInput:
-      type: object
-      required:
-      - identifier
-      - password
-      properties:
-        identifier:
-          type: string
-          description: Handle or other identifier supported by the server
-        password:
-          type: string
-        authFactorToken:
-          type: string
-          description: Two-factor authentication token
-        allowTakendown:
+        emailConfirmed:
           type: boolean
-          description: When true, return a narrow-scoped token for takendown accounts
+        emailAuthFactor:
+          type: boolean
+        active:
+          type: boolean
+        status:
+          type: string
   responses:
     Unauthorized:
       description: Authentication required

@@ -24,7 +24,7 @@ security:
 - bearerAuth: []
 - {}
 tags:
-- name: repo
+- name: Repo
   description: Repository management, record CRUD operations
 paths:
   /com.atproto.repo.getRecord:
@@ -33,7 +33,7 @@ paths:
       summary: Get Record
       description: Get a single record from a repository. Does not require auth.
       tags:
-      - repo
+      - Repo
       security:
       - {}
       parameters:
@@ -76,7 +76,7 @@ paths:
       summary: Create Record
       description: Create a single new repository record. Requires auth, implemented by PDS.
       tags:
-      - repo
+      - Repo
       requestBody:
         required: true
         content:
@@ -100,7 +100,7 @@ paths:
       summary: Put Record
       description: Write a repository record, creating or updating it as needed. Requires auth, implemented by PDS.
       tags:
-      - repo
+      - Repo
       requestBody:
         required: true
         content:
@@ -124,7 +124,7 @@ paths:
       summary: Delete Record
       description: Delete a repository record, or ensure it doesn't exist. Implemented by PDS.
       tags:
-      - repo
+      - Repo
       requestBody:
         required: true
         content:
@@ -171,7 +171,7 @@ paths:
       summary: List Records
       description: List a range of records in a repository, matching a specific collection.
       tags:
-      - repo
+      - Repo
       security:
       - {}
       parameters:
@@ -230,7 +230,7 @@ paths:
       summary: Upload Blob
       description: Upload a new blob, to be referenced from a repository record. The blob will be deleted if it is not referenced within a time window (eg, minutes). Blob restrictions (mimetype, size) are enforced when the reference is created. Requires auth, implemented by PDS.
       tags:
-      - repo
+      - Repo
       requestBody:
         required: true
         content:
@@ -260,7 +260,7 @@ paths:
       summary: Describe Repo
       description: Get information about an account and repository, including the list of collections. Does not require auth.
       tags:
-      - repo
+      - Repo
       security:
       - {}
       parameters:
@@ -281,26 +281,53 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
-    BlobRef:
+    RepoDescription:
       type: object
       required:
-      - $type
-      - ref
-      - mimeType
-      - size
+      - handle
+      - did
+      - didDoc
+      - collections
+      - handleIsCorrect
       properties:
-        $type:
+        handle:
           type: string
-          example: blob
-        ref:
+        did:
+          type: string
+        didDoc:
           type: object
-          properties:
-            $link:
-              type: string
-        mimeType:
+          additionalProperties: true
+        collections:
+          type: array
+          description: List of all the collections (NSIDs) an account has at least one record in.
+          items:
+            type: string
+        handleIsCorrect:
+          type: boolean
+          description: Indicates if handle is currently valid (resolves correctly)
+    PutRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - rkey
+      - record
+      properties:
+        repo:
           type: string
-        size:
-          type: integer
+        collection:
+          type: string
+        rkey:
+          type: string
+        validate:
+          type: boolean
+        record:
+          type: object
+          additionalProperties: true
+        swapRecord:
+          type: string
+        swapCommit:
+          type: string
     CreateRecordInput:
       type: object
       required:
@@ -327,67 +354,6 @@ components:
         swapCommit:
           type: string
           description: Compare and swap with the previous commit by CID.
-    CommitMeta:
-      type: object
-      required:
-      - cid
-      - rev
-      properties:
-        cid:
-          type: string
-        rev:
-          type: string
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
-    PutRecordInput:
-      type: object
-      required:
-      - repo
-      - collection
-      - rkey
-      - record
-      properties:
-        repo:
-          type: string
-        collection:
-          type: string
-        rkey:
-          type: string
-        validate:
-          type: boolean
-        record:
-          type: object
-          additionalProperties: true
-        swapRecord:
-          type: string
-        swapCommit:
-          type: string
-    RepoRecord:
-      type: object
-      required:
-      - uri
-      - value
-      properties:
-        uri:
-          type: string
-          description: AT URI of the record
-        cid:
-          type: string
-          description: Content identifier (CID)
-        value:
-          type: object
-          description: The record data
-          additionalProperties: true
     RecordRef:
       type: object
       required:
@@ -407,30 +373,64 @@ components:
           enum:
           - valid
           - unknown
-    RepoDescription:
+    CommitMeta:
       type: object
       required:
-      - handle
-      - did
-      - didDoc
-      - collections
-      - handleIsCorrect
+      - cid
+      - rev
       properties:
-        handle:
+        cid:
           type: string
-        did:
+        rev:
           type: string
-        didDoc:
+    RepoRecord:
+      type: object
+      required:
+      - uri
+      - value
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier (CID)
+        value:
           type: object
+          description: The record data
           additionalProperties: true
-        collections:
-          type: array
-          description: List of all the collections (NSIDs) an account has at least one record in.
-          items:
-            type: string
-        handleIsCorrect:
-          type: boolean
-          description: Indicates if handle is currently valid (resolves correctly)
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    BlobRef:
+      type: object
+      required:
+      - $type
+      - ref
+      - mimeType
+      - size
+      properties:
+        $type:
+          type: string
+          example: blob
+        ref:
+          type: object
+          properties:
+            $link:
+              type: string
+        mimeType:
+          type: string
+        size:
+          type: integer
   responses:
     Unauthorized:
       description: Authentication required
