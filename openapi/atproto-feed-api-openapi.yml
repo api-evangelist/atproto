@@ -388,123 +388,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
-    ProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-        handle:
-          type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        avatar:
-          type: string
-          format: uri
-        associated:
-          type: object
-          additionalProperties: true
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/ViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-    Label:
-      type: object
-      required:
-      - src
-      - uri
-      - val
-      - cts
-      properties:
-        ver:
-          type: integer
-        src:
-          type: string
-          description: DID of the actor who created this label
-        uri:
-          type: string
-          description: AT URI of the record, repository (account), or other resource this label applies to
-        cid:
-          type: string
-          description: Optionally constrains label to specific version of record/blob
-        val:
-          type: string
-          description: The short string name of the value or type of this label
-          maxLength: 128
-        neg:
-          type: boolean
-          description: If true, this is a negation label, overwriting a previous label
-        cts:
-          type: string
-          format: date-time
-          description: Timestamp when this label was created
-        exp:
-          type: string
-          format: date-time
-          description: Timestamp at which this label expires
-    FeedViewPost:
-      type: object
-      required:
-      - post
-      properties:
-        post:
-          $ref: '#/components/schemas/PostView'
-        reply:
-          type: object
-          description: Reply threading information
-          properties:
-            root:
-              type: object
-              additionalProperties: true
-            parent:
-              type: object
-              additionalProperties: true
-            grandparentAuthor:
-              $ref: '#/components/schemas/ProfileView'
-        reason:
-          type: object
-          description: Reason for appearing in feed (repost, pin, etc.)
-          additionalProperties: true
-        feedContext:
-          type: string
-          description: Context provided by feed generator
-    Like:
-      type: object
-      required:
-      - indexedAt
-      - createdAt
-      - actor
-      properties:
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        actor:
-          $ref: '#/components/schemas/ProfileView'
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     PostView:
       type: object
       required:
@@ -551,6 +434,50 @@ components:
         threadgate:
           type: object
           additionalProperties: true
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    Label:
+      type: object
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource this label applies to
+        cid:
+          type: string
+          description: Optionally constrains label to specific version of record/blob
+        val:
+          type: string
+          description: The short string name of the value or type of this label
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label
+        cts:
+          type: string
+          format: date-time
+          description: Timestamp when this label was created
+        exp:
+          type: string
+          format: date-time
+          description: Timestamp at which this label expires
     ViewerState:
       type: object
       description: Metadata about the relationship between the requesting account and the subject account.
@@ -577,15 +504,88 @@ components:
         knownFollowers:
           type: object
           additionalProperties: true
+    Like:
+      type: object
+      required:
+      - indexedAt
+      - createdAt
+      - actor
+      properties:
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        actor:
+          $ref: '#/components/schemas/ProfileView'
+    ProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
+          type: object
+          additionalProperties: true
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+    FeedViewPost:
+      type: object
+      required:
+      - post
+      properties:
+        post:
+          $ref: '#/components/schemas/PostView'
+        reply:
+          type: object
+          description: Reply threading information
+          properties:
+            root:
+              type: object
+              additionalProperties: true
+            parent:
+              type: object
+              additionalProperties: true
+            grandparentAuthor:
+              $ref: '#/components/schemas/ProfileView'
+        reason:
+          type: object
+          description: Reason for appearing in feed (repost, pin, etc.)
+          additionalProperties: true
+        feedContext:
+          type: string
+          description: Context provided by feed generator
   responses:
-    Unauthorized:
-      description: Authentication required
+    BadRequest:
+      description: Bad request or validation error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request or validation error
+    Unauthorized:
+      description: Authentication required
       content:
         application/json:
           schema:

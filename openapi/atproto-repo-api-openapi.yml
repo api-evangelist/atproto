@@ -280,125 +280,20 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
+  responses:
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    RepoDescription:
-      type: object
-      required:
-      - handle
-      - did
-      - didDoc
-      - collections
-      - handleIsCorrect
-      properties:
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
-        collections:
-          type: array
-          description: List of all the collections (NSIDs) an account has at least one record in.
-          items:
-            type: string
-        handleIsCorrect:
-          type: boolean
-          description: Indicates if handle is currently valid (resolves correctly)
-    PutRecordInput:
-      type: object
-      required:
-      - repo
-      - collection
-      - rkey
-      - record
-      properties:
-        repo:
-          type: string
-        collection:
-          type: string
-        rkey:
-          type: string
-        validate:
-          type: boolean
-        record:
-          type: object
-          additionalProperties: true
-        swapRecord:
-          type: string
-        swapCommit:
-          type: string
-    CreateRecordInput:
-      type: object
-      required:
-      - repo
-      - collection
-      - record
-      properties:
-        repo:
-          type: string
-          description: The handle or DID of the repo (aka, current account).
-        collection:
-          type: string
-          description: The NSID of the record collection.
-        rkey:
-          type: string
-          description: The Record Key.
-        validate:
-          type: boolean
-          description: Can be set to 'false' to skip Lexicon schema validation of record data.
-        record:
-          type: object
-          description: The record itself. Must contain a $type field.
-          additionalProperties: true
-        swapCommit:
-          type: string
-          description: Compare and swap with the previous commit by CID.
-    RecordRef:
-      type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          description: AT URI of the record
-        cid:
-          type: string
-          description: Content identifier
-        commit:
-          $ref: '#/components/schemas/CommitMeta'
-        validationStatus:
-          type: string
-          enum:
-          - valid
-          - unknown
-    CommitMeta:
-      type: object
-      required:
-      - cid
-      - rev
-      properties:
-        cid:
-          type: string
-        rev:
-          type: string
-    RepoRecord:
-      type: object
-      required:
-      - uri
-      - value
-      properties:
-        uri:
-          type: string
-          description: AT URI of the record
-        cid:
-          type: string
-          description: Content identifier (CID)
-        value:
-          type: object
-          description: The record data
-          additionalProperties: true
     Error:
       type: object
       required:
@@ -431,19 +326,124 @@ components:
           type: string
         size:
           type: integer
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request or validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    RepoRecord:
+      type: object
+      required:
+      - uri
+      - value
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier (CID)
+        value:
+          type: object
+          description: The record data
+          additionalProperties: true
+    RecordRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier
+        commit:
+          $ref: '#/components/schemas/CommitMeta'
+        validationStatus:
+          type: string
+          enum:
+          - valid
+          - unknown
+    PutRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - rkey
+      - record
+      properties:
+        repo:
+          type: string
+        collection:
+          type: string
+        rkey:
+          type: string
+        validate:
+          type: boolean
+        record:
+          type: object
+          additionalProperties: true
+        swapRecord:
+          type: string
+        swapCommit:
+          type: string
+    CommitMeta:
+      type: object
+      required:
+      - cid
+      - rev
+      properties:
+        cid:
+          type: string
+        rev:
+          type: string
+    RepoDescription:
+      type: object
+      required:
+      - handle
+      - did
+      - didDoc
+      - collections
+      - handleIsCorrect
+      properties:
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+        collections:
+          type: array
+          description: List of all the collections (NSIDs) an account has at least one record in.
+          items:
+            type: string
+        handleIsCorrect:
+          type: boolean
+          description: Indicates if handle is currently valid (resolves correctly)
+    CreateRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - record
+      properties:
+        repo:
+          type: string
+          description: The handle or DID of the repo (aka, current account).
+        collection:
+          type: string
+          description: The NSID of the record collection.
+        rkey:
+          type: string
+          description: The Record Key.
+        validate:
+          type: boolean
+          description: Can be set to 'false' to skip Lexicon schema validation of record data.
+        record:
+          type: object
+          description: The record itself. Must contain a $type field.
+          additionalProperties: true
+        swapCommit:
+          type: string
+          description: Compare and swap with the previous commit by CID.
   securitySchemes:
     bearerAuth:
       type: http

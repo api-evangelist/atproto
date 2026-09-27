@@ -228,39 +228,30 @@ paths:
                     items:
                       $ref: '#/components/schemas/ProfileView'
 components:
+  responses:
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    ProfileView:
+    Error:
       type: object
       required:
-      - did
-      - handle
+      - error
+      - message
       properties:
-        did:
+        error:
           type: string
-        handle:
+        message:
           type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        avatar:
-          type: string
-          format: uri
-        associated:
-          type: object
-          additionalProperties: true
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/ViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
     Label:
       type: object
       required:
@@ -295,16 +286,32 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
-    Error:
+    ViewerState:
       type: object
-      required:
-      - error
-      - message
+      description: Metadata about the relationship between the requesting account and the subject account.
       properties:
-        error:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
           type: string
-        message:
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
           type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
     ProfileViewDetailed:
       type: object
       required:
@@ -351,45 +358,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
-    ViewerState:
+    ProfileView:
       type: object
-      description: Metadata about the relationship between the requesting account and the subject account.
+      required:
+      - did
+      - handle
       properties:
-        muted:
-          type: boolean
-        mutedByList:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
           type: object
           additionalProperties: true
-        blockedBy:
-          type: boolean
-        blocking:
+        indexedAt:
           type: string
-          description: AT-URI of the blocking record, if present
-        blockingByList:
-          type: object
-          additionalProperties: true
-        following:
+          format: date-time
+        createdAt:
           type: string
-          description: AT-URI of the follow record, if present
-        followedBy:
-          type: string
-          description: AT-URI of the follow record from the subject to the requester
-        knownFollowers:
-          type: object
-          additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request or validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
   securitySchemes:
     bearerAuth:
       type: http

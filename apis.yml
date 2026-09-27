@@ -3,16 +3,21 @@ name: AT Protocol
 description: AT Protocol (Authenticated Transfer Protocol) is an open, federated social networking protocol developed by Bluesky Social PBC that powers the Bluesky social network and its 40M+ users. The protocol defines a public HTTP API surface via XRPC (cross-resolver protocol calls) organized under Lexicon schemas that cover identity (DIDs and handles), repository management, feed generation, labeling, and moderation. Developers can tap into a public firehose WebSocket event stream without API keys, and write operations use OAuth 2.0 or JWT bearer tokens for authentication. All data is stored in user-owned signed repositories and is 100% publicly accessible, making the protocol suitable for building social apps, feed generators, labelers, and bots.
 type: Index
 deliveryModel:
-  model: saas
-  open_source: false
+  model: unknown
+  license_evidence:
+    repo: bluesky-social/atproto
+    spdx: NOASSERTION
+    stars: 9658
+  open_source: unknown
   commercial: true
   callable_host: true
-  label: Hosted service · you call their endpoint
-  confidence: high
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-unlicensed
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
@@ -29,10 +34,10 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/atproto.png
 tags:
-- Social Networking
+- Social Network
 - Decentralized
 - Federated
-- Open-Source
+- Open Source
 - Bluesky
 - Fediverse
 - Identity
@@ -48,6 +53,7 @@ tags_raw:
 - Identity
 - XRPC
 - Lexicon
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/atproto/refs/heads/main/apis.yml
 created: '2026-06-12'
 modified: '2026-06-12'
@@ -74,7 +80,7 @@ apis:
   - type: Documentation
     url: https://atproto.com/specs/event-stream
 - aid: atproto:atproto-actor-api
-  name: AT Protocol actor API
+  name: AT Protocol Actor API
   description: Actor (user) profile, search, and preference operations
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -94,7 +100,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-feed-api
-  name: AT Protocol feed API
+  name: AT Protocol Feed API
   description: Feed, post, timeline, and content operations
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -114,7 +120,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-graph-api
-  name: AT Protocol graph API
+  name: AT Protocol Graph API
   description: Graph operations — follows, blocks, lists, and mutes
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -134,7 +140,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-identity-api
-  name: AT Protocol identity API
+  name: AT Protocol Identity API
   description: DID and handle resolution, identity management
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -154,7 +160,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-notification-api
-  name: AT Protocol notification API
+  name: AT Protocol Notification API
   description: Notification management
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -174,7 +180,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-repo-api
-  name: AT Protocol repo API
+  name: AT Protocol Repo API
   description: Repository management, record CRUD operations
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -194,7 +200,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-server-api
-  name: AT Protocol server API
+  name: AT Protocol Server API
   description: Server management, session creation, account administration
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
@@ -214,7 +220,7 @@ apis:
   - type: Documentation
     url: https://endpoints.bsky.app/
 - aid: atproto:atproto-sync-api
-  name: AT Protocol sync API
+  name: AT Protocol Sync API
   description: Data synchronization, firehose, blob access
   humanURL: https://atproto.com/specs/xrpc
   baseURL: https://bsky.social/xrpc
