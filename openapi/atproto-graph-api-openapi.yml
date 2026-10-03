@@ -124,24 +124,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Bad request or validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     Label:
       type: object
       required:
@@ -176,32 +159,6 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
-    ViewerState:
-      type: object
-      description: Metadata about the relationship between the requesting account and the subject account.
-      properties:
-        muted:
-          type: boolean
-        mutedByList:
-          type: object
-          additionalProperties: true
-        blockedBy:
-          type: boolean
-        blocking:
-          type: string
-          description: AT-URI of the blocking record, if present
-        blockingByList:
-          type: object
-          additionalProperties: true
-        following:
-          type: string
-          description: AT-URI of the follow record, if present
-        followedBy:
-          type: string
-          description: AT-URI of the follow record from the subject to the requester
-        knownFollowers:
-          type: object
-          additionalProperties: true
     ProfileView:
       type: object
       required:
@@ -234,6 +191,49 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ViewerState:
+      type: object
+      description: Metadata about the relationship between the requesting account and the subject account.
+      properties:
+        muted:
+          type: boolean
+        mutedByList:
+          type: object
+          additionalProperties: true
+        blockedBy:
+          type: boolean
+        blocking:
+          type: string
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
+          type: string
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
+  responses:
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

@@ -228,30 +228,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/ProfileView'
 components:
-  responses:
-    BadRequest:
-      description: Bad request or validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     Label:
       type: object
       required:
@@ -286,32 +263,48 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
-    ViewerState:
+    ProfileView:
       type: object
-      description: Metadata about the relationship between the requesting account and the subject account.
+      required:
+      - did
+      - handle
       properties:
-        muted:
-          type: boolean
-        mutedByList:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
           type: object
           additionalProperties: true
-        blockedBy:
-          type: boolean
-        blocking:
+        indexedAt:
           type: string
-          description: AT-URI of the blocking record, if present
-        blockingByList:
-          type: object
-          additionalProperties: true
-        following:
+          format: date-time
+        createdAt:
           type: string
-          description: AT-URI of the follow record, if present
-        followedBy:
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
           type: string
-          description: AT-URI of the follow record from the subject to the requester
-        knownFollowers:
-          type: object
-          additionalProperties: true
+        message:
+          type: string
     ProfileViewDetailed:
       type: object
       required:
@@ -358,38 +351,45 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
-    ProfileView:
+    ViewerState:
       type: object
-      required:
-      - did
-      - handle
+      description: Metadata about the relationship between the requesting account and the subject account.
       properties:
-        did:
-          type: string
-        handle:
-          type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        avatar:
-          type: string
-          format: uri
-        associated:
+        muted:
+          type: boolean
+        mutedByList:
           type: object
           additionalProperties: true
-        indexedAt:
+        blockedBy:
+          type: boolean
+        blocking:
           type: string
-          format: date-time
-        createdAt:
+          description: AT-URI of the blocking record, if present
+        blockingByList:
+          type: object
+          additionalProperties: true
+        following:
           type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/ViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
+          description: AT-URI of the follow record, if present
+        followedBy:
+          type: string
+          description: AT-URI of the follow record from the subject to the requester
+        knownFollowers:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

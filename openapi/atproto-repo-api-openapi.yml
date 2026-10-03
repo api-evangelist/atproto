@@ -280,32 +280,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  responses:
-    BadRequest:
-      description: Bad request or validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
     BlobRef:
       type: object
       required:
@@ -326,22 +301,28 @@ components:
           type: string
         size:
           type: integer
-    RepoRecord:
+    Error:
       type: object
       required:
-      - uri
-      - value
+      - error
+      - message
       properties:
-        uri:
+        error:
           type: string
-          description: AT URI of the record
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    CommitMeta:
+      type: object
+      required:
+      - cid
+      - rev
+      properties:
         cid:
           type: string
-          description: Content identifier (CID)
-        value:
-          type: object
-          description: The record data
-          additionalProperties: true
+        rev:
+          type: string
     RecordRef:
       type: object
       required:
@@ -361,39 +342,6 @@ components:
           enum:
           - valid
           - unknown
-    PutRecordInput:
-      type: object
-      required:
-      - repo
-      - collection
-      - rkey
-      - record
-      properties:
-        repo:
-          type: string
-        collection:
-          type: string
-        rkey:
-          type: string
-        validate:
-          type: boolean
-        record:
-          type: object
-          additionalProperties: true
-        swapRecord:
-          type: string
-        swapCommit:
-          type: string
-    CommitMeta:
-      type: object
-      required:
-      - cid
-      - rev
-      properties:
-        cid:
-          type: string
-        rev:
-          type: string
     RepoDescription:
       type: object
       required:
@@ -418,6 +366,29 @@ components:
         handleIsCorrect:
           type: boolean
           description: Indicates if handle is currently valid (resolves correctly)
+    PutRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - rkey
+      - record
+      properties:
+        repo:
+          type: string
+        collection:
+          type: string
+        rkey:
+          type: string
+        validate:
+          type: boolean
+        record:
+          type: object
+          additionalProperties: true
+        swapRecord:
+          type: string
+        swapCommit:
+          type: string
     CreateRecordInput:
       type: object
       required:
@@ -444,6 +415,35 @@ components:
         swapCommit:
           type: string
           description: Compare and swap with the previous commit by CID.
+    RepoRecord:
+      type: object
+      required:
+      - uri
+      - value
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier (CID)
+        value:
+          type: object
+          description: The record data
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request or validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

@@ -388,6 +388,72 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   schemas:
+    Label:
+      type: object
+      required:
+      - src
+      - uri
+      - val
+      - cts
+      properties:
+        ver:
+          type: integer
+        src:
+          type: string
+          description: DID of the actor who created this label
+        uri:
+          type: string
+          description: AT URI of the record, repository (account), or other resource this label applies to
+        cid:
+          type: string
+          description: Optionally constrains label to specific version of record/blob
+        val:
+          type: string
+          description: The short string name of the value or type of this label
+          maxLength: 128
+        neg:
+          type: boolean
+          description: If true, this is a negation label, overwriting a previous label
+        cts:
+          type: string
+          format: date-time
+          description: Timestamp when this label was created
+        exp:
+          type: string
+          format: date-time
+          description: Timestamp at which this label expires
+    ProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
+          type: object
+          additionalProperties: true
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
     PostView:
       type: object
       required:
@@ -434,50 +500,21 @@ components:
         threadgate:
           type: object
           additionalProperties: true
-    Error:
+    Like:
       type: object
       required:
-      - error
-      - message
+      - indexedAt
+      - createdAt
+      - actor
       properties:
-        error:
-          type: string
-        message:
-          type: string
-    Label:
-      type: object
-      required:
-      - src
-      - uri
-      - val
-      - cts
-      properties:
-        ver:
-          type: integer
-        src:
-          type: string
-          description: DID of the actor who created this label
-        uri:
-          type: string
-          description: AT URI of the record, repository (account), or other resource this label applies to
-        cid:
-          type: string
-          description: Optionally constrains label to specific version of record/blob
-        val:
-          type: string
-          description: The short string name of the value or type of this label
-          maxLength: 128
-        neg:
-          type: boolean
-          description: If true, this is a negation label, overwriting a previous label
-        cts:
+        indexedAt:
           type: string
           format: date-time
-          description: Timestamp when this label was created
-        exp:
+        createdAt:
           type: string
           format: date-time
-          description: Timestamp at which this label expires
+        actor:
+          $ref: '#/components/schemas/ProfileView'
     ViewerState:
       type: object
       description: Metadata about the relationship between the requesting account and the subject account.
@@ -504,53 +541,16 @@ components:
         knownFollowers:
           type: object
           additionalProperties: true
-    Like:
+    Error:
       type: object
       required:
-      - indexedAt
-      - createdAt
-      - actor
+      - error
+      - message
       properties:
-        indexedAt:
+        error:
           type: string
-          format: date-time
-        createdAt:
+        message:
           type: string
-          format: date-time
-        actor:
-          $ref: '#/components/schemas/ProfileView'
-    ProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-        handle:
-          type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        avatar:
-          type: string
-          format: uri
-        associated:
-          type: object
-          additionalProperties: true
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/ViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
     FeedViewPost:
       type: object
       required:
@@ -578,14 +578,14 @@ components:
           type: string
           description: Context provided by feed generator
   responses:
-    BadRequest:
-      description: Bad request or validation error
+    Unauthorized:
+      description: Authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
+    BadRequest:
+      description: Bad request or validation error
       content:
         application/json:
           schema:

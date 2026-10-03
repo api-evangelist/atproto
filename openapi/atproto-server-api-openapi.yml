@@ -198,6 +198,125 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    ServerDescription:
+      type: object
+      required:
+      - did
+      - availableUserDomains
+      properties:
+        inviteCodeRequired:
+          type: boolean
+          description: If true, an invite code must be supplied to create an account
+        phoneVerificationRequired:
+          type: boolean
+          description: If true, a phone verification token must be supplied
+        availableUserDomains:
+          type: array
+          description: List of domain suffixes that can be used in account handles
+          items:
+            type: string
+        links:
+          type: object
+          properties:
+            privacyPolicy:
+              type: string
+              format: uri
+            termsOfService:
+              type: string
+              format: uri
+        contact:
+          type: object
+          properties:
+            email:
+              type: string
+        did:
+          type: string
+          description: DID of the server
+    AccountStatus:
+      type: object
+      required:
+      - activated
+      - validDid
+      - repoCommit
+      - repoRev
+      - repoBlocks
+      - indexedRecords
+      - privateStateValues
+      - expectedBlobs
+      - importedBlobs
+      properties:
+        activated:
+          type: boolean
+        validDid:
+          type: boolean
+        repoCommit:
+          type: string
+        repoRev:
+          type: string
+        repoBlocks:
+          type: integer
+        indexedRecords:
+          type: integer
+        privateStateValues:
+          type: integer
+        expectedBlobs:
+          type: integer
+        importedBlobs:
+          type: integer
+    SessionInfo:
+      type: object
+      required:
+      - handle
+      - did
+      properties:
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+        email:
+          type: string
+        emailConfirmed:
+          type: boolean
+        emailAuthFactor:
+          type: boolean
+        active:
+          type: boolean
+        status:
+          type: string
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    CreateAccountOutput:
+      type: object
+      required:
+      - accessJwt
+      - refreshJwt
+      - handle
+      - did
+      properties:
+        accessJwt:
+          type: string
+        refreshJwt:
+          type: string
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
     Session:
       type: object
       required:
@@ -238,75 +357,23 @@ components:
           - takendown
           - suspended
           - deactivated
-    ServerDescription:
+    CreateSessionInput:
       type: object
       required:
-      - did
-      - availableUserDomains
+      - identifier
+      - password
       properties:
-        inviteCodeRequired:
+        identifier:
+          type: string
+          description: Handle or other identifier supported by the server
+        password:
+          type: string
+        authFactorToken:
+          type: string
+          description: Two-factor authentication token
+        allowTakendown:
           type: boolean
-          description: If true, an invite code must be supplied to create an account
-        phoneVerificationRequired:
-          type: boolean
-          description: If true, a phone verification token must be supplied
-        availableUserDomains:
-          type: array
-          description: List of domain suffixes that can be used in account handles
-          items:
-            type: string
-        links:
-          type: object
-          properties:
-            privacyPolicy:
-              type: string
-              format: uri
-            termsOfService:
-              type: string
-              format: uri
-        contact:
-          type: object
-          properties:
-            email:
-              type: string
-        did:
-          type: string
-          description: DID of the server
-    SessionInfo:
-      type: object
-      required:
-      - handle
-      - did
-      properties:
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
-        email:
-          type: string
-        emailConfirmed:
-          type: boolean
-        emailAuthFactor:
-          type: boolean
-        active:
-          type: boolean
-        status:
-          type: string
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
+          description: When true, return a narrow-scoped token for takendown accounts
     CreateAccountInput:
       type: object
       required:
@@ -332,82 +399,15 @@ components:
         recoveryKey:
           type: string
           description: DID PLC rotation key (recovery key)
-    AccountStatus:
-      type: object
-      required:
-      - activated
-      - validDid
-      - repoCommit
-      - repoRev
-      - repoBlocks
-      - indexedRecords
-      - privateStateValues
-      - expectedBlobs
-      - importedBlobs
-      properties:
-        activated:
-          type: boolean
-        validDid:
-          type: boolean
-        repoCommit:
-          type: string
-        repoRev:
-          type: string
-        repoBlocks:
-          type: integer
-        indexedRecords:
-          type: integer
-        privateStateValues:
-          type: integer
-        expectedBlobs:
-          type: integer
-        importedBlobs:
-          type: integer
-    CreateAccountOutput:
-      type: object
-      required:
-      - accessJwt
-      - refreshJwt
-      - handle
-      - did
-      properties:
-        accessJwt:
-          type: string
-        refreshJwt:
-          type: string
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
-    CreateSessionInput:
-      type: object
-      required:
-      - identifier
-      - password
-      properties:
-        identifier:
-          type: string
-          description: Handle or other identifier supported by the server
-        password:
-          type: string
-        authFactorToken:
-          type: string
-          description: Two-factor authentication token
-        allowTakendown:
-          type: boolean
-          description: When true, return a narrow-scoped token for takendown accounts
   responses:
-    BadRequest:
-      description: Bad request or validation error
+    Unauthorized:
+      description: Authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required
+    BadRequest:
+      description: Bad request or validation error
       content:
         application/json:
           schema:
