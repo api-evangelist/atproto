@@ -229,6 +229,38 @@ paths:
                       $ref: '#/components/schemas/ProfileView'
 components:
   schemas:
+    ProfileView:
+      type: object
+      required:
+      - did
+      - handle
+      properties:
+        did:
+          type: string
+        handle:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        avatar:
+          type: string
+          format: uri
+        associated:
+          type: object
+          additionalProperties: true
+        indexedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        viewer:
+          $ref: '#/components/schemas/ViewerState'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
     Label:
       type: object
       required:
@@ -263,48 +295,6 @@ components:
           type: string
           format: date-time
           description: Timestamp at which this label expires
-    ProfileView:
-      type: object
-      required:
-      - did
-      - handle
-      properties:
-        did:
-          type: string
-        handle:
-          type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        avatar:
-          type: string
-          format: uri
-        associated:
-          type: object
-          additionalProperties: true
-        indexedAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-        viewer:
-          $ref: '#/components/schemas/ViewerState'
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-        message:
-          type: string
     ProfileViewDetailed:
       type: object
       required:
@@ -351,6 +341,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Label'
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
     ViewerState:
       type: object
       description: Metadata about the relationship between the requesting account and the subject account.

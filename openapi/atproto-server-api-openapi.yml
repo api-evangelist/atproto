@@ -198,125 +198,48 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ServerDescription:
-      type: object
-      required:
-      - did
-      - availableUserDomains
-      properties:
-        inviteCodeRequired:
-          type: boolean
-          description: If true, an invite code must be supplied to create an account
-        phoneVerificationRequired:
-          type: boolean
-          description: If true, a phone verification token must be supplied
-        availableUserDomains:
-          type: array
-          description: List of domain suffixes that can be used in account handles
-          items:
-            type: string
-        links:
-          type: object
-          properties:
-            privacyPolicy:
-              type: string
-              format: uri
-            termsOfService:
-              type: string
-              format: uri
-        contact:
-          type: object
-          properties:
-            email:
-              type: string
-        did:
-          type: string
-          description: DID of the server
-    AccountStatus:
-      type: object
-      required:
-      - activated
-      - validDid
-      - repoCommit
-      - repoRev
-      - repoBlocks
-      - indexedRecords
-      - privateStateValues
-      - expectedBlobs
-      - importedBlobs
-      properties:
-        activated:
-          type: boolean
-        validDid:
-          type: boolean
-        repoCommit:
-          type: string
-        repoRev:
-          type: string
-        repoBlocks:
-          type: integer
-        indexedRecords:
-          type: integer
-        privateStateValues:
-          type: integer
-        expectedBlobs:
-          type: integer
-        importedBlobs:
-          type: integer
-    SessionInfo:
+    CreateAccountInput:
       type: object
       required:
       - handle
-      - did
       properties:
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
         email:
           type: string
-        emailConfirmed:
-          type: boolean
-        emailAuthFactor:
-          type: boolean
-        active:
-          type: boolean
-        status:
-          type: string
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
-    CreateAccountOutput:
-      type: object
-      required:
-      - accessJwt
-      - refreshJwt
-      - handle
-      - did
-      properties:
-        accessJwt:
-          type: string
-        refreshJwt:
-          type: string
         handle:
           type: string
+          description: Requested handle for the account
         did:
           type: string
-        didDoc:
-          type: object
-          additionalProperties: true
+          description: Pre-existing atproto DID, being imported to a new account
+        inviteCode:
+          type: string
+        verificationCode:
+          type: string
+        verificationPhone:
+          type: string
+        password:
+          type: string
+          description: Initial account password
+        recoveryKey:
+          type: string
+          description: DID PLC rotation key (recovery key)
+    CreateSessionInput:
+      type: object
+      required:
+      - identifier
+      - password
+      properties:
+        identifier:
+          type: string
+          description: Handle or other identifier supported by the server
+        password:
+          type: string
+        authFactorToken:
+          type: string
+          description: Two-factor authentication token
+        allowTakendown:
+          type: boolean
+          description: When true, return a narrow-scoped token for takendown accounts
     Session:
       type: object
       required:
@@ -357,48 +280,125 @@ components:
           - takendown
           - suspended
           - deactivated
-    CreateSessionInput:
+    Error:
       type: object
       required:
-      - identifier
-      - password
+      - error
+      - message
       properties:
-        identifier:
+        error:
           type: string
-          description: Handle or other identifier supported by the server
-        password:
+          description: Error name/code
+        message:
           type: string
-        authFactorToken:
-          type: string
-          description: Two-factor authentication token
-        allowTakendown:
+          description: Human-readable error message
+    ServerDescription:
+      type: object
+      required:
+      - did
+      - availableUserDomains
+      properties:
+        inviteCodeRequired:
           type: boolean
-          description: When true, return a narrow-scoped token for takendown accounts
-    CreateAccountInput:
+          description: If true, an invite code must be supplied to create an account
+        phoneVerificationRequired:
+          type: boolean
+          description: If true, a phone verification token must be supplied
+        availableUserDomains:
+          type: array
+          description: List of domain suffixes that can be used in account handles
+          items:
+            type: string
+        links:
+          type: object
+          properties:
+            privacyPolicy:
+              type: string
+              format: uri
+            termsOfService:
+              type: string
+              format: uri
+        contact:
+          type: object
+          properties:
+            email:
+              type: string
+        did:
+          type: string
+          description: DID of the server
+    CreateAccountOutput:
       type: object
       required:
+      - accessJwt
+      - refreshJwt
       - handle
+      - did
       properties:
-        email:
+        accessJwt:
+          type: string
+        refreshJwt:
           type: string
         handle:
           type: string
-          description: Requested handle for the account
         did:
           type: string
-          description: Pre-existing atproto DID, being imported to a new account
-        inviteCode:
+        didDoc:
+          type: object
+          additionalProperties: true
+    SessionInfo:
+      type: object
+      required:
+      - handle
+      - did
+      properties:
+        handle:
           type: string
-        verificationCode:
+        did:
           type: string
-        verificationPhone:
+        didDoc:
+          type: object
+          additionalProperties: true
+        email:
           type: string
-        password:
+        emailConfirmed:
+          type: boolean
+        emailAuthFactor:
+          type: boolean
+        active:
+          type: boolean
+        status:
           type: string
-          description: Initial account password
-        recoveryKey:
+    AccountStatus:
+      type: object
+      required:
+      - activated
+      - validDid
+      - repoCommit
+      - repoRev
+      - repoBlocks
+      - indexedRecords
+      - privateStateValues
+      - expectedBlobs
+      - importedBlobs
+      properties:
+        activated:
+          type: boolean
+        validDid:
+          type: boolean
+        repoCommit:
           type: string
-          description: DID PLC rotation key (recovery key)
+        repoRev:
+          type: string
+        repoBlocks:
+          type: integer
+        indexedRecords:
+          type: integer
+        privateStateValues:
+          type: integer
+        expectedBlobs:
+          type: integer
+        importedBlobs:
+          type: integer
   responses:
     Unauthorized:
       description: Authentication required

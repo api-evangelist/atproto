@@ -301,94 +301,6 @@ components:
           type: string
         size:
           type: integer
-    Error:
-      type: object
-      required:
-      - error
-      - message
-      properties:
-        error:
-          type: string
-          description: Error name/code
-        message:
-          type: string
-          description: Human-readable error message
-    CommitMeta:
-      type: object
-      required:
-      - cid
-      - rev
-      properties:
-        cid:
-          type: string
-        rev:
-          type: string
-    RecordRef:
-      type: object
-      required:
-      - uri
-      - cid
-      properties:
-        uri:
-          type: string
-          description: AT URI of the record
-        cid:
-          type: string
-          description: Content identifier
-        commit:
-          $ref: '#/components/schemas/CommitMeta'
-        validationStatus:
-          type: string
-          enum:
-          - valid
-          - unknown
-    RepoDescription:
-      type: object
-      required:
-      - handle
-      - did
-      - didDoc
-      - collections
-      - handleIsCorrect
-      properties:
-        handle:
-          type: string
-        did:
-          type: string
-        didDoc:
-          type: object
-          additionalProperties: true
-        collections:
-          type: array
-          description: List of all the collections (NSIDs) an account has at least one record in.
-          items:
-            type: string
-        handleIsCorrect:
-          type: boolean
-          description: Indicates if handle is currently valid (resolves correctly)
-    PutRecordInput:
-      type: object
-      required:
-      - repo
-      - collection
-      - rkey
-      - record
-      properties:
-        repo:
-          type: string
-        collection:
-          type: string
-        rkey:
-          type: string
-        validate:
-          type: boolean
-        record:
-          type: object
-          additionalProperties: true
-        swapRecord:
-          type: string
-        swapCommit:
-          type: string
     CreateRecordInput:
       type: object
       required:
@@ -415,6 +327,25 @@ components:
         swapCommit:
           type: string
           description: Compare and swap with the previous commit by CID.
+    RecordRef:
+      type: object
+      required:
+      - uri
+      - cid
+      properties:
+        uri:
+          type: string
+          description: AT URI of the record
+        cid:
+          type: string
+          description: Content identifier
+        commit:
+          $ref: '#/components/schemas/CommitMeta'
+        validationStatus:
+          type: string
+          enum:
+          - valid
+          - unknown
     RepoRecord:
       type: object
       required:
@@ -431,6 +362,75 @@ components:
           type: object
           description: The record data
           additionalProperties: true
+    RepoDescription:
+      type: object
+      required:
+      - handle
+      - did
+      - didDoc
+      - collections
+      - handleIsCorrect
+      properties:
+        handle:
+          type: string
+        did:
+          type: string
+        didDoc:
+          type: object
+          additionalProperties: true
+        collections:
+          type: array
+          description: List of all the collections (NSIDs) an account has at least one record in.
+          items:
+            type: string
+        handleIsCorrect:
+          type: boolean
+          description: Indicates if handle is currently valid (resolves correctly)
+    Error:
+      type: object
+      required:
+      - error
+      - message
+      properties:
+        error:
+          type: string
+          description: Error name/code
+        message:
+          type: string
+          description: Human-readable error message
+    PutRecordInput:
+      type: object
+      required:
+      - repo
+      - collection
+      - rkey
+      - record
+      properties:
+        repo:
+          type: string
+        collection:
+          type: string
+        rkey:
+          type: string
+        validate:
+          type: boolean
+        record:
+          type: object
+          additionalProperties: true
+        swapRecord:
+          type: string
+        swapCommit:
+          type: string
+    CommitMeta:
+      type: object
+      required:
+      - cid
+      - rev
+      properties:
+        cid:
+          type: string
+        rev:
+          type: string
   responses:
     Unauthorized:
       description: Authentication required
