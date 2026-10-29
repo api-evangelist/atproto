@@ -1,4 +1,4 @@
-# AT Protocol (atproto)
+# AT Protocol
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,50 +64,174 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AT Protocol (Authenticated Transfer Protocol) is an open, federated social networking protocol developed by Bluesky Social PBC that powers the Bluesky social network and its 40M+ users. The protocol exposes a public HTTP XRPC API organized under Lexicon schemas covering identity (DIDs and handles), repository management, feed generation, labeling, and moderation. Developers can access a public firehose WebSocket event stream without API keys, and write operations use OAuth 2.0 or JWT bearer tokens for authentication.
+AT Protocol (Authenticated Transfer Protocol) is an open, federated social networking protocol developed by Bluesky Social PBC that powers the Bluesky social network and its 40M+ users. The protocol defines a public HTTP API surface via XRPC (cross-resolver protocol calls) organized under Lexicon schemas that cover identity (DIDs and handles), repository management, feed generation, labeling, and moderation. Developers can tap into a public firehose WebSocket event stream without API keys, and write operations use OAuth 2.0 or JWT bearer tokens for authentication. All data is stored in user-owned signed repositories and is 100% publicly accessible, making the protocol suitable for building social apps, feed generators, labelers, and bots.
 
-- **APIs.json**: [https://raw.githubusercontent.com/api-evangelist/atproto/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/atproto/refs/heads/main/apis.yml)
-- **Naftiko Fleet**: [https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=atproto-api-evangelist&utm_content=repo](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=atproto-api-evangelist&utm_content=repo)
+**Areas:** Social Network · Decentralized · Federated · Open Source · Bluesky · Fediverse · Identity · XRPC · Lexicon
 
-## Tags
+## AT Protocol on APIs.io
 
-Social Networking, Decentralized, Federated, Open Source, Bluesky, Fediverse, Identity, XRPC, Lexicon
+Everything profiled for AT Protocol is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/atproto/](https://apis.io/providers/atproto/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (15)
 
-| API | Description | Docs |
-|-----|-------------|------|
-| AT Protocol Core API (com.atproto) | Core XRPC API covering server identity, repository management, account administration, moderation/labeling, and data sync | [Docs](https://atproto.com/specs/xrpc) |
-| Bluesky Application API (app.bsky) | Application-layer Lexicon API for feeds, actors, graph, notifications, and video | [Docs](https://docs.bsky.app/docs/advanced-guides/atproto) |
-| AT Protocol Firehose | Public WebSocket event stream for real-time access to all public network activity — no API key required | [Docs](https://atproto.com/specs/event-stream) |
+- [AT Protocol Firehose (Event Stream)](https://apis.io/apis/atproto/firehose/) — Public WebSocket event stream providing real-time access to all public activity on the AT Protocol network, including posts, likes, follows, and other…
+- [AT Protocol Actor API](https://apis.io/apis/atproto/atproto-actor-api/) — Actor (user) profile, search, and preference operations
+- [AT Protocol Feed API](https://apis.io/apis/atproto/atproto-feed-api/) — Feed, post, timeline, and content operations
+- [AT Protocol Graph API](https://apis.io/apis/atproto/atproto-graph-api/) — Graph operations — follows, blocks, lists, and mutes
+- [AT Protocol Identity API](https://apis.io/apis/atproto/atproto-identity-api/) — DID and handle resolution, identity management
+- [AT Protocol Notification API](https://apis.io/apis/atproto/atproto-notification-api/) — Notification management
+- [AT Protocol Repo API](https://apis.io/apis/atproto/atproto-repo-api/) — Repository management, record CRUD operations
+- [AT Protocol Server API](https://apis.io/apis/atproto/atproto-server-api/) — Server management, session creation, account administration
+- [AT Protocol Sync API](https://apis.io/apis/atproto/atproto-sync-api/) — Data synchronization, firehose, blob access
+- [AT Protocol XRPC API](https://apis.io/apis/atproto/atproto-xrpc/) — XRPC is the AT Protocol's HTTP-based remote procedure call layer. All protocol interactions — querying records, writing records, subscribing to streams,…
+- [AT Protocol Lexicon Schemas](https://apis.io/apis/atproto/lexicon/) — Lexicon is the schema definition language for AT Protocol. Every record type, XRPC method, and event subscription on the network is described by a Lexicon…
+- [Personal Data Server (PDS) API](https://apis.io/apis/atproto/pds-api/) — The PDS hosts a user's repository of signed records and exposes the com.atproto.* XRPC methods for account creation, authentication, record CRUD, blob…
+- [AT Protocol Relay & Firehose](https://apis.io/apis/atproto/relay-firehose/) — The Relay aggregates the com.atproto.sync.subscribeRepos firehose across PDS hosts and re-broadcasts the combined event stream over WebSocket. AppViews and…
+- [Bluesky AppView API](https://apis.io/apis/atproto/bsky-appview/) — The Bluesky AppView indexes the firehose and exposes the app.bsky.* XRPC methods that the Bluesky client (and any compatible client) uses to render…
+- [AT Protocol Identity (DID & Handles)](https://apis.io/apis/atproto/identity-did/) — Identity in AT Protocol is anchored in DIDs (did:plc or did:web), with human-readable handles resolved through DNS TXT records or well-known HTTP endpoints.…
 
-## Plans / Rate Limits / FinOps
+### Published properties
 
-| Resource | File |
-|----------|------|
-| Plans & Pricing | [plans/atproto-plans-pricing.yml](plans/atproto-plans-pricing.yml) |
-| Rate Limits | [rate-limits/atproto-rate-limits.yml](rate-limits/atproto-rate-limits.yml) |
-| FinOps | [finops/atproto-finops.yml](finops/atproto-finops.yml) |
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Timestamps
+#### Agentic access (1)
 
-- **Created**: 2026-06-12
-- **Modified**: 2026-06-12
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Common Properties
+- [Atproto Agentic Access](https://apis.io/agentic-access/atproto/atproto-agentic-access/)
 
-| Type | URL |
-|------|-----|
-| Website | https://atproto.com/ |
-| Documentation | https://atproto.com/guides/overview |
-| Blog | https://atproto.com/blog |
-| GitHub Organization | https://github.com/bluesky-social |
-| LinkedIn | https://www.linkedin.com/company/bluesky-pbc |
-| X (Twitter) | https://twitter.com/at_protocol |
-| Status Page | https://status.bsky.app/ |
-| TypeScript SDK | https://github.com/bluesky-social/atproto/tree/main/packages |
-| Go SDK (Indigo) | https://github.com/bluesky-social/indigo |
+#### JSON Schema (3)
 
-## Maintainers
+The data models the API reads and writes.
 
-- **Kin Lane** — [kin@apievangelist.com](mailto:kin@apievangelist.com)
+- [Bluesky Post (app.bsky.feed.post)](https://apis.io/schemas/atproto/atproto-post/)
+- [Bluesky Profile View Detailed (app.bsky.actor.defs#profileViewDetailed)](https://apis.io/schemas/atproto/atproto-profile/)
+- [AT Protocol Session](https://apis.io/schemas/atproto/atproto-session/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Atproto Context](https://apis.io/jsonld/atproto/atproto-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [AT Protocol Vocabulary](https://apis.io/vocabularies/atproto/atproto-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Atproto Createrecord Example](https://apis.io/examples/atproto/atproto-createRecord-example/)
+- [Atproto Createsession Example](https://apis.io/examples/atproto/atproto-createSession-example/)
+- [Atproto Getprofile Example](https://apis.io/examples/atproto/atproto-getProfile-example/)
+- [Atproto Gettimeline Example](https://apis.io/examples/atproto/atproto-getTimeline-example/)
+
+#### Collections (8)
+
+Postman and Open Collection request collections.
+
+- [Bluesky Application API (app.bsky) actor API](https://apis.io/collections/atproto/open-atproto-actor-api/)
+- [Bluesky Application API (app.bsky) actor feed API](https://apis.io/collections/atproto/open-atproto-feed-api/)
+- [Bluesky Application API (app.bsky) actor graph API](https://apis.io/collections/atproto/open-atproto-graph-api/)
+- [Bluesky Application API (app.bsky) actor identity API](https://apis.io/collections/atproto/open-atproto-identity-api/)
+- [Bluesky Application API (app.bsky) actor notification API](https://apis.io/collections/atproto/open-atproto-notification-api/)
+- [Bluesky Application API (app.bsky) actor repo API](https://apis.io/collections/atproto/open-atproto-repo-api/)
+- [Bluesky Application API (app.bsky) actor server API](https://apis.io/collections/atproto/open-atproto-server-api/)
+- [Bluesky Application API (app.bsky) actor sync API](https://apis.io/collections/atproto/open-atproto-sync-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [AT Protocol — jsonschema rules](https://apis.io/rules/atproto/atproto-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Atproto Authentication](https://apis.io/security/atproto/atproto-authentication/)
+- [Atproto Domain Security](https://apis.io/security/atproto/atproto-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Atproto Plans Pricing](https://apis.io/plans/atproto/atproto-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Atproto Rate Limits](https://apis.io/rate-limits/atproto/atproto-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Atproto Finops](https://apis.io/finops/atproto/atproto-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://atproto.com/)
+- [Documentation](https://atproto.com/guides/overview)
+- [Blog](https://atproto.com/blog)
+- [GitHub](https://github.com/bluesky-social)
+- [Status](https://status.bsky.app/)
+
+## API Evangelist rating
+
+**Kin Score 36.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 67.0 |
+| Contract governance | 9.8 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 38.1 |
+| Access clarity | 7.9 |
+
+**Agent readiness 21.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | unknown |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/atproto/](https://apis.io/providers/atproto/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AT Protocol: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/atproto/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
